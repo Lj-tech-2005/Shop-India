@@ -1,0 +1,133 @@
+'use client'
+
+
+import React from 'react';
+import { IoIosArrowDown } from "react-icons/io";
+import { IoMdSearch } from "react-icons/io";
+import { useState } from 'react';
+import { FaBars } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+
+export default function Header() {
+
+    const [toggle, settoggle] = useState(false);
+
+    return (
+        <header className=" bg-white ">
+            <div className=" mx-auto max-w-[1360px] p-2 md:p-4 rounded-[10px]">
+                {/* Top Info Bar */}
+                <div className="hidden md:flex flex-col sm:flex-row justify-between px-2 sm:px-5 gap-2 sm:gap-0">
+                    <div className="flex justify-between sm:justify-start gap-2 sm:gap-4">
+                        <span className="bg-[#EBEEF6] rounded-[6px] font-normal text-[12px] px-2 py-1">Hotline 24/7</span>
+                        <span className="text-[12px] px-2 py-1 font-bold">(025) 3886 25 16</span>
+                    </div>
+                    <div className="flex justify-between sm:justify-end items-center gap-3 sm:gap-5">
+                        <span className="text-[14px] font-normal">Sell on Swoo</span>
+                        <span className="text-[14px] font-normal">Order Track</span>
+                        <button className="text-[14px] font-normal border-r-2 px-2 border-[#99999999]">USD</button>
+                        <button className="text-[14px] gap-2 flex items-center font-normal px-2">
+                            <img src="/eng.png" alt="" className="w-4 h-4" />
+                            Eng
+                            <IoIosArrowDown />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Main Navigation */}
+                <nav className="mt-5 flex flex-wrap md:flex-nowrap  items-start lg:items-center justify-between gap-4 px-2 sm:px-5">
+                    {/* Logo + Menu */}
+                    <div className="flex  justify-between md:justify-normal   gap-4 w-full">
+
+
+                        <div className="flex cursor-pointer items-center gap-2">
+                            <span className="bg-[#01A49E] rounded-4xl h-[49px] w-[55px] flex justify-center items-center">
+                                <img className="mt-2" src="/vector1.png" alt="" />
+                            </span>
+                            <div className="text-[14px] leading-3.5 font-bold">
+                                <p>SWOO</p>
+                                <p>TECH MART</p>
+                            </div>
+                        </div>
+                        <ul className="hidden items-center md:flex flex-wrap gap-4 text-[14px] font-bold">
+                            <li className="flex items-center gap-1">Home<IoIosArrowDown className="mt-1" /></li>
+                            <li className="flex items-center gap-1">Pages<IoIosArrowDown className="mt-1" /></li>
+                            <li className="flex items-center gap-1">Products<IoIosArrowDown className="mt-1" /></li>
+                            <li>Contact</li>
+                        </ul>
+
+                        {
+                            toggle ?
+                                <IoClose onClick={() => settoggle(!toggle)} className='text-3xl text-black cursor-pointer block md:hidden' />
+                                :
+                                <FaBars onClick={() => settoggle(!toggle)} className='text-3xl text-black cursor-pointer block md:hidden' />
+
+
+                        }
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div className={`md:hidden bg-black fixed z-10 top-0 ${toggle ? "left-0" : "left-[-100%]"}  duration-500 p-5 text-white w-[50vw]  h-screen flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-9`}>
+
+                        <ul className="flex flex-col flex-wrap gap-4 text-[14px] font-bold">
+                            <li className="flex items-center gap-1">Home<IoIosArrowDown className="mt-1" /></li>
+                            <li className="flex items-center gap-1">Pages<IoIosArrowDown className="mt-1" /></li>
+                            <li className="flex items-center gap-1">Products<IoIosArrowDown className="mt-1" /></li>
+                            <li>Contact</li>
+                        </ul>
+                    </div>
+
+
+
+
+
+                    {/* Login + Cart */}
+                    <div className="flex gap-4 sm:gap-5 items-center">
+                        <div className="uppercase text-left">
+                            <p className="text-[#666666] text-[11px] font-normal">welcome</p>
+                            <p className="text-[10px] md:text-[14px] font-bold">log in / Register</p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                            <div className="bg-[#EBEEF6] w-[40px] h-[40px] relative rounded-[20px] flex items-center justify-center">
+                                <span className="bg-[#01A49E] rounded-[10px] text-white text-[11px] absolute bottom-0 right-0 flex items-center justify-center w-[20px] h-[20px]">5</span>
+                            </div>
+                            <div className="text-left">
+                                <p className="text-[#666666] text-[11px] font-normal uppercase">cart</p>
+                                <p className="text-[10px] md:text-[14px] font-bold">$1,689.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </nav>
+            </div>
+
+            {/* Bottom Search + Info */}
+            <div className='bg-[#01A49E] '>
+                <div className="rounded-[10px] mx-auto max-w-[1360px] gap-3 md:gap-5 flex flex-col md:flex-row items-center justify-between p-3 px-4 ">
+                    {/* Search Bar */}
+                    <div className="w-full md:w-[50%] flex gap-2 rounded-3xl p-2 items-center bg-white">
+                        <div className="text-[13px] whitespace-nowrap flex items-center gap-2 font-bold">
+                            All Categories <IoIosArrowDown className="mt-1" />
+                        </div>
+                        <input className="text-[13px] outline-none p-1 w-full" type="text" placeholder="Search anything..." />
+                        <IoMdSearch className="text-[18px]" />
+                    </div>
+
+                    {/* Info Text */}
+                    <div className="hidden  font-medium md:flex flex-wrap md:flex-nowrap text-white justify-center md:justify-around gap-2 w-full md:w-[50%] uppercase text-[13px] text-center">
+                        <p>free shipping over $199</p>
+                        <p>30 days money back</p>
+                        <p>100% secure payment</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+}
