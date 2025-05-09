@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 
 
 
-export default function productPage() {
- 
+export default function productPage({ params }) {
+
 
     const submithandler = (e) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ export default function productPage() {
             formdata.append("images", image);
         }
 
-        axios.post(`http://localhost:5000/product/multi-images/${product_id}`, formdata)
+        axios.post(`http://localhost:5000/product/multi-images/${params?.product_id}`, formdata)
             .then((response) => {
                 notify(response.data.msg, response.data.flag);
                 if (response.data.flag === 1) {
