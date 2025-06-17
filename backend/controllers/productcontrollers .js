@@ -71,83 +71,89 @@ const productconntroller = {
         }
     }
     ,
-    async read(req, res) {
-        try {
-            const id = req.params.id;
+  async read(req, res) {
+    try {
+        const id = req.params.id;
 
-            // 1. Get product by ID
-            if (id) {
-                const product = await productmodel.findById(id).populate(["categoryId", "colors", "brandId"]);
-                if (!product) {
-                    return res.send({ msg: "Product not found", products: null, total: 0, flag: 1 });
-                }
-                return res.send({ msg: "Product found", products: product, total: 1, flag: 1 });
+        // 1. Get product by ID
+        if (id) {
+            const product = await productmodel.findById(id).populate(["categoryId", "colors", "brandId"]);
+            if (!product) {
+                return res.send({ msg: "Product not found", products: null, total: 0, flag: 1 });
             }
-
-            // 2. Build filter
-            const filterQuery = {};
-
-            if (req.query.category) {
-                const category = await categorymodels.findOne({ slug: req.query.category });
-                if (category) {
-                    filterQuery.categoryId = category._id;
-                } else {
-                    return res.send({ msg: "Category not found", products: [], total: 0, flag: 1 });
-                }
-            }
-
-            if (req.query.brand) {
-                const brand = await brandmodels.findOne({ slug: req.query.brand });
-                if (brand) {
-                    filterQuery.brandId = brand._id;
-                } else {
-                    return res.send({ msg: "Brand not found", products: [], total: 0, flag: 1 });
-                }
-            }
-
-            if (req.query.color) {
-                const color = await colormodels.findOne({ slug: req.query.color });
-                if (color) {
-                    filterQuery.colors = { $in: [color._id] };
-                } else {
-                    return res.send({ msg: "Color not found", products: [], total: 0, flag: 1 });
-                }
-            }
-
-            if (req.query.minPrice || req.query.maxPrice) {
-                const priceFilter = {};
-                if (req.query.minPrice) priceFilter.$gte = parseFloat(req.query.minPrice);
-                if (req.query.maxPrice) priceFilter.$lte = parseFloat(req.query.maxPrice);
-                filterQuery.finalPrice = priceFilter;
-            }
-
-            // 3. Pagination logic
-            const page = parseInt(req.query.page) || 1;
-            const limit = parseInt(req.query.limit) || 12;
-            const skip = (page - 1) * limit;
-
-            // 4. Get total matching count
-            const total = await productmodel.countDocuments(filterQuery);
-
-            // 5. Get paginated products
-            const products = await productmodel.find(filterQuery)
-                .skip(skip)
-                .limit(limit)
-                .populate(["categoryId", "colors", "brandId"]);
-
-            // 6. Return response
-            res.send({
-                msg: "Product found",
-                products,
-                total, // ✅ total matching count
-                flag: 1
-            });
-
-        } catch (error) {
-            console.error("Error in Product Read API:", error);
-            res.status(500).send({ msg: "Internal Server Error", flag: 0 });
+            return res.send({ msg: "Product found", products: product, total: 1, flag: 1 });
         }
+
+        // 2. Build filter query
+        const filterQuery = {};
+
+        if (req.query.category) {
+            const category = await categorymodels.findOne({ slug: req.query.category });
+            if (category) {
+                filterQuery.categoryId = category._id;
+            } else {
+                return res.send({ msg: "Category not found", products: [], total: 0, flag: 1 });
+            }
+        }
+
+        if (req.query.brand) {
+            const brand = await brandmodels.findOne({ slug: req.query.brand });
+            if (brand) {
+                filterQuery.brandId = brand._id;
+            } else {
+                return res.send({ msg: "Brand not found", products: [], total: 0, flag: 1 });
+            }
+        }
+
+        if (req.query.color) {
+            const color = await colormodels.findOne({ slug: req.query.color });
+            if (color) {
+                filterQuery.colors = { $in: [color._id] };
+            } else {
+                return res.send({ msg: "Color not found", products: [], total: 0, flag: 1 });
+            }
+        }
+
+        if (req.query.minPrice || req.query.maxPrice) {
+            const priceFilter = {};
+            if (req.query.minPrice) priceFilter.$gte = parseFloat(req.query.minPrice);
+            if (req.query.maxPrice) priceFilter.$lte = parseFloat(req.query.maxPrice);
+            filterQuery.finalPrice = priceFilter;
+        }
+
+        // 3. Pagination logic (handle ?all=true)
+        let limit = parseInt(req.query.limit) || 12;
+        let page = parseInt(req.query.page) || 1;
+        let skip = (page - 1) * limit;
+
+        if (req.query.all === "true") {
+            limit = 0; // no limit
+            skip = 0;
+        }
+
+        // 4. Get total matching count
+        const total = await productmodel.countDocuments(filterQuery);
+
+        // 5. Get products
+        const products = await productmodel.find(filterQuery)
+            .skip(skip)
+            .limit(limit)
+            .populate(["categoryId", "colors", "brandId"]);
+
+        // 6. Return response
+        res.send({
+            msg: "Product found",
+            products,
+            total,
+            flag: 1
+        });
+
+    } catch (error) {
+        console.error("Error in Product Read API:", error);
+        res.status(500).send({ msg: "Internal Server Error", flag: 0 });
     }
+}
+
 
 
     ,

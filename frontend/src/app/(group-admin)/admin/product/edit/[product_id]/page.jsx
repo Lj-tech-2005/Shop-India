@@ -99,10 +99,10 @@ export default function eiditProduct({ params }) {
 
       if (err.response) {
         console.log("Backend error:", JSON.stringify(err.response.data, null, 2));
-        notify(err.response.data.msg, 0); // यह यूज़र को error message दिखा देगा
+        notify(err.response.data.msg, 0); 
       } else {
         console.log("Unexpected error:", JSON.stringify(err, null, 2));
-        notify("कुछ गलत हो गया", 0); // fallback message
+        notify("something went wrong", 0); // fallback message
       }
     }
 
@@ -114,6 +114,11 @@ export default function eiditProduct({ params }) {
     },
     []
   )
+  useEffect(() => {
+    if (product) {
+      setdiscription(product.longDescription || "");
+    }
+  }, [product]);
   return (
     <section className="bg-gray-50 min-h-screen py-12">
       <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-lg">

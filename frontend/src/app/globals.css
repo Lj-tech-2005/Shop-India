@@ -1,2 +1,46 @@
 @import "tailwindcss";
 
+.rich-text-content {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.rich-text-content * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.rich-text-content img,
+.rich-text-content iframe,
+.rich-text-content video {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 1rem 0;
+}
+
+.rich-text-content table {
+  display: block;
+  overflow-x: auto;
+  width: 100% !important;
+}
+
+.rich-text-content h1,
+.rich-text-content h2,
+.rich-text-content h3,
+.rich-text-content h4 {
+  font-size: 1.25rem;
+  margin: 1rem 0 0.5rem;
+  line-height: 1.4;
+}
+
+.rich-text-content p,
+.rich-text-content div {
+  margin-bottom: 1rem;
+}

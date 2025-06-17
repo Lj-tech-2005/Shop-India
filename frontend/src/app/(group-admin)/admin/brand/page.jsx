@@ -7,8 +7,7 @@ const BrandList = async () => {
 
 
     const brandJSON = await getBrand();
-    const brandata = brandJSON?.brand;
-
+    const brandata = brandJSON?.brands;
 
 
     return (

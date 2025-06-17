@@ -3,7 +3,7 @@ import AddToCart from '@/components/website/addToCart';
 import Pagination from '@/components/website/Pagination';
 
 const Productslug = async ({ params, searchParams }) => {
-    const limit = parseInt(searchParams?.limit) || 12;
+    const limit = parseInt(searchParams?.limit) || 30;
     const page = parseInt(searchParams?.page) || 1;
   const response = await getproduct(
     null,

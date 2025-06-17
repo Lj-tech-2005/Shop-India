@@ -85,7 +85,7 @@ const categoryconntroller = {
                 return res.send({ msg: "Category found successfully", flag: 1, categorys: category });
             }
 
-            const categorys = await categorymodel.find().sort({ createdAt: -1 });
+            const categorys = await categorymodel.find();
 
             const data = await Promise.all(categorys.map(async (cat) => {
                 const productCount = await productmodel.countDocuments({ categoryId: cat._id });

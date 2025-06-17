@@ -105,9 +105,11 @@ export default function Header() {
                                 </ul>
                             </div>
 
-                            <Link href={"/store"}><li className="flex items-center gap-1">Store<IoIosArrowDown className="mt-1" /></li></Link>
+                            <Link href={"/store"}><li className="flex items-center gap-1">Store</li></Link>
+                            <Link href={"/contact"}>
+                                <li>Contact</li>
+                            </Link>
 
-                            <li>Contact</li>
                         </ul>
 
                         {

@@ -79,7 +79,7 @@ export default function AddProductForm() {
         if (res.data.flag === 1) {
 
           e.target.reset()
-          description = ""
+          setdiscription("");
         }
       }
 
@@ -308,7 +308,7 @@ export default function AddProductForm() {
           <div className="pt-4">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition"
+              className="inline-flex cursor-pointer items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition"
             >
               <FaPlus />
               Add Product
