@@ -1,19 +1,30 @@
 @import "tailwindcss";
 
-.rich-text-content {
+/* .rich-text-content {
   width: 100%;
-  max-width: 100%;
+  overflow-x: auto;
   overflow-wrap: break-word;
-  word-wrap: break-word;
   word-break: break-word;
   white-space: normal;
   font-size: 1rem;
   line-height: 1.5;
 }
 
-.rich-text-content * {
-  max-width: 100% !important;
-  box-sizing: border-box !important;
+.rich-text-content table {
+  width: 100% !important;
+  border-collapse: collapse;
+  table-layout: auto; /* 👈 yeh line sabse important hai */
+
+
+/* .rich-text-content td,
+.rich-text-content th {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal !important;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #ddd;
 }
 
 .rich-text-content img,
@@ -23,24 +34,46 @@
   height: auto !important;
   display: block;
   margin: 1rem 0;
+} */ 
+
+/* .rich-text-content {
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+.rich-text-content * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .rich-text-content table {
-  display: block;
-  overflow-x: auto;
   width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse;
 }
 
-.rich-text-content h1,
-.rich-text-content h2,
-.rich-text-content h3,
-.rich-text-content h4 {
-  font-size: 1.25rem;
-  margin: 1rem 0 0.5rem;
-  line-height: 1.4;
+.rich-text-content td,
+.rich-text-content th {
+  word-break: break-word !important;
+  white-space: normal !important;
+  padding: 8px;
+  border: 1px solid #e5e7eb; /* Tailwind border-gray-200 */
+  /* vertical-align: top;
 }
 
-.rich-text-content p,
-.rich-text-content div {
+.rich-text-content img,
+.rich-text-content iframe {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 1rem 0;
+}
+
+.rich-text-content p {
   margin-bottom: 1rem;
-}
+} */ 
+

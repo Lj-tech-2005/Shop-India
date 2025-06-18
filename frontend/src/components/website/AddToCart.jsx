@@ -37,7 +37,7 @@ export default function AddToCart({ product }) {
 
 
     return (
-        <button onClick={addcart} className="mt-2 w-full flex cursor-pointer items-center justify-center gap-2 bg-[#01A49E] text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition duration-300">
+        <button onClick={addcart} className="mt-2 w-full flex cursor-pointer items-center justify-center gap-2  bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">
             <FaShoppingCart />
             Add to Cart
         </button>

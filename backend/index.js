@@ -11,6 +11,7 @@ const adminrouters = require("./routers/adminrouters");
 const userRouters = require('./routers/userrouters');
 const CartRouter = require('./routers/cartRouter');
 const brandRouter = require('./routers/brandeouter');
+const orderRouter = require('./routers/orderRouters');
 
 
 
@@ -25,6 +26,7 @@ server.use("/user", userRouters)
 server.use(express.static("public"))
 server.use("/cart", CartRouter);
 server.use("/brand", brandRouter);
+server.use("/order", orderRouter);
 
 
 

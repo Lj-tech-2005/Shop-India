@@ -5,12 +5,21 @@ import Image from 'next/image';
 import { getproduct } from '@/app/library/api-call';
 import { FaHeart, FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
 import { PiMinus, PiPlus } from 'react-icons/pi';
+import AddToCart from '@/components/website/AddToCart';
 
 export default function SingalProduct({ params }) {
   const productId = params?.product_id;
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [qty, setQty] = useState(1);
+
+  // ✅ Step 1: Function to convert plain text to HTML
+  const convertToHTML = (text) => {
+    return text
+      ?.split('\n\n')
+      .map(para => `<p>${para.replace(/\n/g, '<br />')}</p>`)
+      .join('');
+  };
 
   useEffect(() => {
     async function fetchProduct() {
@@ -30,6 +39,9 @@ export default function SingalProduct({ params }) {
       </div>
     );
   }
+
+  // ✅ Step 2: Use the function to create formattedDescription
+  const formattedDescription = convertToHTML(product?.longDescription || '');
 
   return (
     <div className="max-w-[1360px] mx-auto px-4">
@@ -125,20 +137,7 @@ export default function SingalProduct({ params }) {
               <h2 className="text-2xl font-bold">₹{product.finalPrice}</h2>
               <p className="text-green-600 text-sm">{product.stock ? "In Stock" : "Out of Stock"}</p>
 
-              {/* <div className="flex items-center gap-4">
-                <button
-                  onClick={() => qty > 1 && setQty(qty - 1)}
-                  className="p-2 border rounded"
-                >
-                  <PiMinus />
-                </button>
-                <span>{qty}</span>
-                <button onClick={() => setQty(qty + 1)} className="p-2 border rounded">
-                  <PiPlus />
-                </button>
-              </div> */}
-
-              <button className="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600">ADD TO CART</button>
+              <AddToCart product={product} />
               <button className="w-full bg-yellow-400 text-black py-2 rounded hover:bg-yellow-500">BUY WITH PayPal</button>
 
               <div className="flex flex-wrap gap-4 text-sm text-gray-500">
@@ -166,13 +165,15 @@ export default function SingalProduct({ params }) {
           </div>
         </div>
 
-        {/* LONG DESCRIPTION - Moved to bottom */}
-        <div className="mt-10 p-4 bg-white rounded-xl">
+        {/* ✅ Final Step: Properly formatted longDescription */}
+        <div className="mt-10 p-4 bg-white rounded-xl overflow-x-auto">
           <h3 className="text-lg font-semibold mb-2">Product Description</h3>
-          <div className="rich-text-content">
-            <div dangerouslySetInnerHTML={{ __html: product.longDescription }} />
-          </div>
+          <div
+            className="rich-text-content"
+            dangerouslySetInnerHTML={{ __html: product.longDescription }}
+          />
         </div>
+
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default function CartPage() {
 
   async function getProduct() {
     try {
-      const response = await getproduct();
+      const response = await getproduct(undefined, undefined, undefined, undefined, 0, null, null, 1, true);
       const products = response?.products || [];
       setProducts(products);
     } catch (error) {
