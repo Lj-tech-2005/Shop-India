@@ -1,5 +1,14 @@
 const OrderModel = require("../models/orderModels");
 const CartModel = require("../models/cartModel");
+const Rozorpay = require("razorpay")
+
+const razorpay_instance = new Rozorpay({
+
+  key_id,
+  key_secret
+
+})
+
 
 const orderController = {
   async orderPlace(req, res) {
@@ -33,13 +42,27 @@ const orderController = {
       order
         .save()
         .then(async () => {
-          await CartModel.deleteMany({ user_id }); // Clear cart
-          res.send({
-            message: "Order Placed", // 👈 changed from "order place" to "Order Placed"
-            order_id: order._id,
-            flag: 1
-          });
+
+          // for cod
+
+          if (payment_mode == 0) {
+            await CartModel.deleteMany({ user_id }); // Clear cart
+            res.send({
+              message: "Order Placed", // 👈 changed from "order place" to "Order Placed"
+              order_id: order._id,
+              flag: 1
+            });
+
+            // for rozer pay
+          } else {
+
+
+
+
+
+          }
         })
+
         .catch(() => {
           res.send({
             message: "Order Not Placed",

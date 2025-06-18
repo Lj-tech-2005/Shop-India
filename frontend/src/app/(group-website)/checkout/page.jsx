@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { emptyCart } from "@/redux/features/cartSlice";
+import Link from "next/link";
 
 const Checkout = () => {
   const user = useSelector((state) => state.user.data);
@@ -43,7 +44,7 @@ const Checkout = () => {
       })
       .then((response) => {
         const data = response.data;
-       
+
         if (data.flag !== 1) {
           notify(data.message, data.flag);
           return;
@@ -53,7 +54,7 @@ const Checkout = () => {
           dispatch(emptyCart());
           router.push(`/thankyou/${data.order_id}`);
           notify(data.message, data.flag);
-          
+
         }
       })
       .catch((error) => {
@@ -76,11 +77,10 @@ const Checkout = () => {
               <div
                 key={index}
                 onClick={() => setSelectedAddress(index)}
-                className={`mb-4 p-4 rounded border transition cursor-pointer ${
-                  selectedAddress === index
-                    ? "border-teal-500 bg-teal-50"
-                    : "border-gray-300"
-                }`}
+                className={`mb-4 p-4 rounded border transition cursor-pointer ${selectedAddress === index
+                  ? "border-teal-500 bg-teal-50"
+                  : "border-gray-300"
+                  }`}
               >
                 <p className="font-medium">{address.name}</p>
                 <p>{address.contact}</p>
@@ -92,9 +92,11 @@ const Checkout = () => {
                 <p>{address.country}</p>
               </div>
             ))}
-            <div className="inline-block px-4 py-2 bg-teal-500 text-white rounded cursor-pointer">
-              + Add New
-            </div>
+            <Link href={"/profile"}>
+              <div className="inline-block px-4 py-2 bg-teal-500 text-white rounded cursor-pointer">
+                + Add New
+              </div>
+            </Link>
           </div>
 
           {/* Payment Section */}
@@ -103,21 +105,19 @@ const Checkout = () => {
             <div className="flex gap-4">
               <button
                 onClick={() => setPaymentMode(0)}
-                className={`flex-1 p-3 rounded border text-center font-medium transition cursor-pointer ${
-                  paymentMode === 0
-                    ? "bg-teal-500 text-white border-teal-500"
-                    : "bg-gray-50 border-gray-300 text-gray-700"
-                }`}
+                className={`flex-1 p-3 rounded border text-center font-medium transition cursor-pointer ${paymentMode === 0
+                  ? "bg-teal-500 text-white border-teal-500"
+                  : "bg-gray-50 border-gray-300 text-gray-700"
+                  }`}
               >
                 Cash on Delivery (COD)
               </button>
               <button
                 onClick={() => setPaymentMode(1)}
-                className={`flex-1 p-3 rounded border text-center font-medium transition cursor-pointer ${
-                  paymentMode === 1
-                    ? "bg-teal-500 text-white border-teal-500"
-                    : "bg-gray-50 border-gray-300 text-gray-700"
-                }`}
+                className={`flex-1 p-3 rounded border text-center font-medium transition cursor-pointer ${paymentMode === 1
+                  ? "bg-teal-500 text-white border-teal-500"
+                  : "bg-gray-50 border-gray-300 text-gray-700"
+                  }`}
               >
                 Online Payment
               </button>
@@ -149,11 +149,10 @@ const Checkout = () => {
           <button
             onClick={handlePlaceOrder}
             disabled={!isFormValid}
-            className={`w-full py-3 rounded-md font-medium transition ${
-              isFormValid
-                ? "bg-teal-500 text-white hover:bg-teal-600 cursor-pointer"
-                : "bg-gray-300 text-white cursor-not-allowed"
-            }`}
+            className={`w-full py-3 rounded-md font-medium transition ${isFormValid
+              ? "bg-teal-500 text-white hover:bg-teal-600 cursor-pointer"
+              : "bg-gray-300 text-white cursor-not-allowed"
+              }`}
           >
             PLACE ORDER
           </button>
