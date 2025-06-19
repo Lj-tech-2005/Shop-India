@@ -15,7 +15,7 @@ export default function BrandFilter() {
         const brandJSON = await getBrand();
         const allbrand = brandJSON?.brands;
 
-        console.log(brandJSON, "chetan")
+
         setbranddata(allbrand)
 
     }

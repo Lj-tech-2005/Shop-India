@@ -20,15 +20,14 @@ const ProductCard = async ({ searchParams }) => {
                 </div>
             ) : (
                 <div className="grid max-w-[1360px] p-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {products.map((product,index) => (
-                     <Link key={index} href={`/singleproduct/${product?._id}`}>
-
-                            <div
-                                key={product._id}
-                                className="bg-white p-4 rounded-xl shadow-md flex flex-col h-[480px] justify-between"
-                            >
-                                {/* Image Section */}
-                                <div className="relative w-full h-[220px]">
+                    {products.map((product, index) => (
+                        <div
+                            key={product._id}
+                            className="bg-white p-4 rounded-xl shadow-md flex flex-col h-[480px] justify-between"
+                        >
+                            {/* Image Section */}
+                            <Link key={index} href={`/singleproduct/${product?._id}`}>
+                                <div className="relative w-full h-[220px] cursor-pointer">
                                     <img
                                         src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
                                         alt={product.name}
@@ -40,61 +39,59 @@ const ProductCard = async ({ searchParams }) => {
                                         </span>
                                     )}
                                 </div>
+                            </Link>
 
-                                {/* Product Info */}
-                                <div className="flex flex-col flex-grow mt-4">
-                                    <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-tight">
+                            {/* Product Info */}
+                            <div className="flex flex-col flex-grow mt-4">
+                                <Link key={index}  href={`/singleproduct/${product?._id}`}>
+                                    <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-tight cursor-pointer">
                                         {product.name}
                                     </h3>
+                                </Link>
 
-                                    <p className="text-sm text-gray-600 line-clamp-2 mt-1">
-                                        {product.shortDescription}
-                                    </p>
+                                <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+                                    {product.shortDescription}
+                                </p>
 
-                                    {/* Color Dots */}
-                                    {product.colors?.length > 0 && (
-                                        <div className="flex items-center gap-2 mt-2">
-                                            {product.colors.map((color, idx) => (
-                                                <span
-                                                    key={idx}
-                                                    className="w-4 h-4 rounded-full border"
-                                                    style={{ backgroundColor: color.Hexcode }}
-                                                    title={color.name || color.Hexcode}
-                                                />
-                                            ))}
-                                        </div>
-                                    )}
+                                {/* Color Dots */}
+                                {product.colors?.length > 0 && (
+                                    <div className="flex items-center gap-2 mt-2">
+                                        {product.colors.map((color, idx) => (
+                                            <span
+                                                key={idx}
+                                                className="w-4 h-4 rounded-full border"
+                                                style={{ backgroundColor: color.Hexcode }}
+                                                title={color.name || color.Hexcode}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
 
-                                    {/* Price + Button */}
-                                    <div className="mt-auto pt-4">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-xl font-bold text-blue-600">
-                                                ₹{product.finalPrice}
+                                {/* Price + Button */}
+                                <div className="mt-auto pt-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xl font-bold text-blue-600">
+                                            ₹{product.finalPrice}
+                                        </span>
+                                        {product.originalPrice > product.finalPrice && (
+                                            <span className="text-sm line-through text-gray-400">
+                                                ₹{product.originalPrice}
                                             </span>
-                                            {product.originalPrice > product.finalPrice && (
-                                                <span className="text-sm line-through text-gray-400">
-                                                    ₹{product.originalPrice}
-                                                </span>
-                                            )}
-                                        </div>
+                                        )}
+                                    </div>
 
-                                        <div className="mt-2">
-                                            <AddToCart product={product} />
-                                        </div>
+                                    <div className="mt-2">
+                                        <AddToCart product={product} />
                                     </div>
                                 </div>
                             </div>
-                        </Link >
+                        </div>
                     ))}
                 </div>
-
-
-
-
             )}
             <Pagination total={response?.total} limit={limit} />
-
         </div>
+
     );
 };
 

@@ -1,10 +1,11 @@
 import { getproduct } from '@/app/library/api-call';
 import AddToCart from '@/components/website/addToCart';
 import Pagination from '@/components/website/Pagination';
+import Link from 'next/link';
 
 const Productslug = async ({ params, searchParams }) => {
-    const limit = parseInt(searchParams?.limit) || 30;
-    const page = parseInt(searchParams?.page) || 1;
+  const limit = parseInt(searchParams?.limit) || 30;
+  const page = parseInt(searchParams?.page) || 1;
   const response = await getproduct(
     null,
     params?.category_slug,
@@ -14,7 +15,7 @@ const Productslug = async ({ params, searchParams }) => {
     searchParams?.minPrice,
     searchParams?.maxPrice,
     page
-   
+
 
   );
   const products = response?.products || [];
@@ -28,30 +29,34 @@ const Productslug = async ({ params, searchParams }) => {
         </div>
       ) : (
         <div className="grid max-w-[1360px] p-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div
               key={product._id}
               className="bg-white p-4 rounded-xl shadow-md flex flex-col h-[480px] justify-between"
             >
               {/* Image Section */}
-              <div className="relative w-full h-[220px]">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
-                  alt={product.name}
-                  className="w-full h-full object-contain rounded-lg bg-gray-50"
-                />
-                {product.discountPercentage > 0 && (
-                  <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                    -{product.discountPercentage}%
-                  </span>
-                )}
-              </div>
+              <Link key={index} href={`/singleproduct/${product?._id}`}>
+                <div className="relative w-full h-[220px] cursor-pointer">
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                    alt={product.name}
+                    className="w-full h-full object-contain rounded-lg bg-gray-50"
+                  />
+                  {product.discountPercentage > 0 && (
+                    <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                      -{product.discountPercentage}%
+                    </span>
+                  )}
+                </div>
+              </Link>
 
               {/* Product Info */}
               <div className="flex flex-col flex-grow mt-4">
-                <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-tight">
-                  {product.name}
-                </h3>
+                <Link key={index} href={`/singleproduct/${product?._id}`}>
+                  <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-tight cursor-pointer">
+                    {product.name}
+                  </h3>
+                </Link>
 
                 <p className="text-sm text-gray-600 line-clamp-2 mt-1">
                   {product.shortDescription}
@@ -92,7 +97,6 @@ const Productslug = async ({ params, searchParams }) => {
             </div>
           ))}
         </div>
-
       )}
       <Pagination total={response?.total} limit={limit} />
     </div>

@@ -1,13 +1,15 @@
 'use client';
 
 import { axiosApiInstance, notify } from "@/app/library/helper";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { emptyCart } from "@/redux/features/cartSlice";
 import Link from "next/link";
+import { useRazorpay } from "react-razorpay";
 
 const Checkout = () => {
+  const { Razorpay } = useRazorpay()
   const user = useSelector((state) => state.user.data);
   const cart = useSelector((state) => state.cart);
   const [selectedAddress, setSelectedAddress] = useState(0);
@@ -52,10 +54,62 @@ const Checkout = () => {
 
         if (paymentMode === 0) {
           dispatch(emptyCart());
-          router.push(`/thankyou/${data.order_id}`);
           notify(data.message, data.flag);
+          router.push(`/thankyou/${data.order_id}`);
+
+
+        } else {
+
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_id,
+            currency: "INR",
+            name: "Apna Market",
+            description: "Test Transaction",
+            order_id: response.data.razorpay_order_id, // Generate order_id on server
+            handler: (razorpay_response) => {
+              axiosApiInstance.post("/order/success", {
+                order_id: data.order_id, // ✅ not response.data
+                user_id: user._id,       // ✅ correct key
+                razorpay_response
+              }).then((res) => {
+                if (res.data.flag === 1) {
+                  dispatch(emptyCart());
+                  notify(res.data.message || "Payment successful", 1);
+                  router.push(`/thankyou/${data.order_id}`);
+                } else {
+                  notify(res.data.message || "Payment success but something went wrong.", 0);
+                }
+              }).catch((err) => {
+                console.error(err);
+                notify("Something went wrong while saving payment info.", 0);
+              });
+            }
+            ,
+            prefill: {
+              name: user?.data?.name,
+              email: user?.data?.email,
+              contact: user?.data?.contact,
+            },
+            theme: {
+              color: "#F37254",
+            },
+          };
+
+          const razorpayInstance = new Razorpay(options);
+          razorpayInstance.open();
+
+          // razorpayInstance.error(
+
+          //   (razorpay_error)=>{
+
+          //     console.log(razorpay_error)
+
+          //   }
+
+          // )
 
         }
+
       })
       .catch((error) => {
         console.error("Order placement error:", error);

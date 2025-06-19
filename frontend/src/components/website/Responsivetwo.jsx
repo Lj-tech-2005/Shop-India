@@ -69,10 +69,8 @@ export default function Responsivetwo() {
             <Slider {...settings}>
                 {productslice.map((product, index) => (
                     <Link key={index} href={`/singleproduct/${product?._id}`}>
-
                         <div key={product._id} className="p-2">
-                            <div className="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer h-[400px] justify-between border border-gray-100">
-
+                            <div className="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer h-[400px] justify-between border border-gray-100 transform transition-transform duration-300 hover:scale-105">
                                 {/* Image Section */}
                                 <div className="relative w-full h-[220px] rounded-xl overflow-hidden bg-gray-50">
                                     <img
@@ -125,7 +123,9 @@ export default function Responsivetwo() {
                                                 In Stock ({product.stock})
                                             </span>
                                         ) : (
-                                            <span className="text-sm text-red-500 font-medium">Out of Stock</span>
+                                            <span className="text-sm text-red-500 font-medium">
+                                                Out of Stock
+                                            </span>
                                         )}
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@ export default function Responsivetwo() {
                     </Link>
                 ))}
             </Slider>
-
         </div>
+
     );
 }

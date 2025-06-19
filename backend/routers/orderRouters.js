@@ -4,5 +4,5 @@ const orderController = require("../controllers/orderController")
 
 
 orderRouter.post('/order-place', orderController.orderPlace);
-// orderRouter.post('/success', OrderController.orderSuccess);
+orderRouter.post('/success', orderController.orderSuccess);
 module.exports = orderRouter;
