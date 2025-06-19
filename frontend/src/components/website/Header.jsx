@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
-import { IoIosArrowDown } from "react-icons/io";
-import { IoMdSearch } from "react-icons/io";
-import { FaBars } from "react-icons/fa6";
-import { IoClose } from "react-icons/io5";
-import { MdShoppingCart } from "react-icons/md";
-import { FaUserCircle } from "react-icons/fa";
+import { IoIosArrowDown } from 'react-icons/io';
+import { IoMdSearch } from 'react-icons/io';
+import { FaBars } from 'react-icons/fa6';
+import { IoClose } from 'react-icons/io5';
+import { MdShoppingCart } from 'react-icons/md';
+import { FaUserCircle } from 'react-icons/fa';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { emptyCart, lstocart } from '@/redux/features/cartSlice';
@@ -16,174 +16,178 @@ export default function Header() {
     const router = useRouter();
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user);
-    const dispatcher = useDispatch();
+    const dispatch = useDispatch();
+
     const [toggle, settoggle] = useState(false);
     const [showPagesDropdown, setShowPagesDropdown] = useState(false);
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
     useEffect(() => {
-        dispatcher(lstocart());
-        dispatcher(lstoUser());
+        dispatch(lstocart());
+        dispatch(lstoUser());
     }, []);
 
-    function logoutHandler() {
-        dispatcher(logoutUser());
-        dispatcher(emptyCart());
-        router.push("/login");
-    }
+    const logoutHandler = () => {
+        dispatch(logoutUser());
+        dispatch(emptyCart());
+        router.push('/login');
+    };
 
     return (
-        <header className="bg-white">
-            <div className="max-w-[1360px] mx-auto p-2 md:p-4 rounded-[10px]">
-                {/* Top Info Bar */}
-                <div className="hidden md:flex flex-col sm:flex-row justify-between px-2 sm:px-5 gap-2 sm:gap-0">
-                    <div className="flex justify-between sm:justify-start gap-2 sm:gap-4">
-                        <span className="bg-[#EBEEF6] rounded-[6px] font-normal text-[12px] px-2 py-1">Hotline 24/7</span>
-                        <span className="text-[12px] px-2 py-1 font-bold">(025) 3886 25 16</span>
+        <header className="bg-white shadow-sm">
+            <div className="max-w-[1360px] mx-auto p-2 md:p-4">
+                {/* Top Bar */}
+                <div className="hidden md:flex justify-between px-2 sm:px-5 text-sm">
+                    <div className="flex gap-4">
+                        <span className="bg-[#EBEEF6] rounded px-2 py-1 text-xs">Hotline 24/7</span>
+                        <span className="font-bold text-xs">(025) 3886 25 16</span>
                     </div>
-                    <div className="flex justify-between sm:justify-end items-center gap-3 sm:gap-5">
-                        <span className="text-[14px] font-normal">Sell on Swoo</span>
-                        <span className="text-[14px] font-normal">Order Track</span>
-                        <button className="text-[14px] font-normal border-r-2 px-2 border-[#99999999]">USD</button>
-                        <button className="text-[14px] gap-2 flex items-center font-normal px-2">
-                            <img src="/eng.png" alt="" className="w-4 h-4" />
-                            Eng
-                            <IoIosArrowDown />
-                        </button>
+                    <div className="flex gap-4 items-center text-sm">
+                        <span className="cursor-pointer">Sell on Swoo</span>
+                        <span className="cursor-pointer">Order Track</span>
+                        <span className="border-r pr-2 cursor-pointer">USD</span>
+                        <span className="flex items-center gap-1 cursor-pointer">
+                            <img src="/eng.png" className="w-4 h-4" />
+                            Eng <IoIosArrowDown />
+                        </span>
                     </div>
                 </div>
 
-                {/* Main Navigation */}
-                <nav className="mt-5 flex flex-wrap md:flex-nowrap items-start lg:items-center justify-between gap-4 px-2 sm:px-5">
-                    {/* Logo + Menu */}
-                    <div className="flex justify-between md:justify-normal gap-4 w-full">
-                        <div className="flex cursor-pointer items-center gap-2">
-                            <span className="bg-[#01A49E] rounded-4xl h-[49px] w-[55px] flex justify-center items-center">
-                                <img className="mt-2" src="/vector1.png" alt="" />
-                            </span>
-                            <div className="text-[14px] leading-3.5 font-bold">
+                {/* Main Nav */}
+                <nav className="mt-5 flex flex-wrap md:flex-nowrap justify-between items-center gap-4 px-2 sm:px-5">
+                    {/* Logo & Menu */}
+                    <div className="flex justify-between w-full md:w-auto items-center gap-4">
+                        <div className="flex items-center gap-2 cursor-pointer">
+                            <div className="bg-[#01A49E] rounded-full w-[55px] h-[49px] flex justify-center items-center">
+                                <img src="/vector1.png" className="mt-2" />
+                            </div>
+                            <div className="text-sm font-bold leading-tight">
                                 <p>SWOO</p>
                                 <p>TECH MART</p>
                             </div>
                         </div>
-                        <ul className="hidden items-center cursor-pointer md:flex flex-wrap gap-4 text-[14px] font-bold">
-                            <Link href={"/"}><li className="flex items-center gap-1">Home</li></Link>
 
-                            {/* Dropdown Pages */}
+                        {/* Desktop Nav Items */}
+                        <ul className="hidden md:flex items-center gap-5 font-bold text-sm">
+                            <Link href="/"><li className="cursor-pointer">Home</li></Link>
+
+                            {/* Pages Dropdown */}
                             <div
-                                className="relative group"
+                                className="relative group cursor-pointer"
                                 onMouseEnter={() => setShowPagesDropdown(true)}
                                 onMouseLeave={() => setShowPagesDropdown(false)}
                             >
-                                <li className="cursor-pointer flex items-center gap-1 relative">
-                                    Pages <IoIosArrowDown className="mt-1" />
-                                </li>
-                                <ul className={`absolute top-6 left-0 z-30 w-48 bg-white rounded-md shadow-lg transition-all duration-300 border border-gray-100 ${showPagesDropdown ? "opacity-100 visible" : "opacity-0 invisible"}`}>
-                                    <Link href="/profile"><li className="px-5 py-2 hover:bg-gray-100 transition-all rounded-t-md">👤 Profile</li></Link>
-                                    <Link href="/about"><li className="px-5 py-2 hover:bg-gray-100 transition-all">📘 About</li></Link>
-                                    <Link href="/contact"><li className="px-5 py-2 hover:bg-gray-100 transition-all">📞 Contact</li></Link>
-                                    <Link href="/login"><li className="px-5 py-2 hover:bg-gray-100 transition-all rounded-b-md">🔐 Login</li></Link>
+                                <li className="flex items-center gap-1">Pages <IoIosArrowDown className="mt-1" /></li>
+                                <ul className={`absolute top-6 left-0 z-30 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 transition-all duration-200 ${showPagesDropdown ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                                    {user.data && (
+                                        <Link href="/profile">
+                                            <li className="px-5 py-2 text-sm hover:bg-gray-100 transition cursor-pointer">👤 Profile</li>
+                                        </Link>
+                                    )}
+                                    <Link href="/about">
+                                        <li className="px-5 py-2 text-sm hover:bg-gray-100 transition cursor-pointer">📘 About</li>
+                                    </Link>
+                                    <Link href="/contact">
+                                        <li className="px-5 py-2 text-sm hover:bg-gray-100 transition cursor-pointer">📞 Contact</li>
+                                    </Link>
+                                    <Link href="/login">
+                                        <li className="px-5 py-2 text-sm hover:bg-gray-100 transition cursor-pointer">🔐 Login</li>
+                                    </Link>
                                 </ul>
                             </div>
 
-                            <Link href={"/store"}><li className="flex items-center gap-1">Store</li></Link>
-                            <Link href={"/contact"}><li>Contact</li></Link>
+                            <Link href="/store"><li className="cursor-pointer">Store</li></Link>
+                            <Link href="/contact"><li className="cursor-pointer">Contact</li></Link>
                         </ul>
 
-                        {
-                            toggle ?
-                                <IoClose onClick={() => settoggle(!toggle)} className='text-3xl text-black cursor-pointer block md:hidden' />
-                                :
-                                <FaBars onClick={() => settoggle(!toggle)} className='text-3xl text-black cursor-pointer block md:hidden' />
-                        }
+                        {/* Mobile Toggle */}
+                        {toggle ? (
+                            <IoClose onClick={() => settoggle(false)} className="text-3xl md:hidden cursor-pointer" />
+                        ) : (
+                            <FaBars onClick={() => settoggle(true)} className="text-3xl md:hidden cursor-pointer" />
+                        )}
                     </div>
 
-                    {/* Mobile Sidebar Menu */}
-                    <div className={`md:hidden bg-black fixed z-10 top-0 ${toggle ? "left-0" : "left-[-100%]"} duration-500 p-5 text-white w-[50vw] h-screen flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-9`}>
-                        <ul className="flex flex-col flex-wrap gap-4 text-[14px] font-bold">
-                            <Link href={"/"}><li className="flex cursor-pointer items-center gap-1">Home</li></Link>
-                            <div
-                                className="relative group"
-                                onMouseEnter={() => setShowPagesDropdown(true)}
-                                onMouseLeave={() => setShowPagesDropdown(false)}
-                            >
-                                <li className="cursor-pointer flex items-center gap-1 relative">
-                                    Pages <IoIosArrowDown className="mt-1" />
-                                </li>
-                                <ul className={`absolute top-6 text-black left-0 z-30 w-48 bg-white rounded-md shadow-lg transition-all duration-300 border border-gray-100 ${showPagesDropdown ? "opacity-100 visible" : "opacity-0 invisible"}`}>
-                                    <Link href="/profile"><li className="px-5 py-2 hover:bg-gray-100 transition-all rounded-t-md">👤 Profile</li></Link>
-                                    <Link href="/about"><li className="px-5 py-2 hover:bg-gray-100 transition-all">📘 About</li></Link>
-                                    <Link href="/contact"><li className="px-5 py-2 hover:bg-gray-100 transition-all">📞 Contact</li></Link>
-                                    <Link href="/login"><li className="px-5 py-2 hover:bg-gray-100 transition-all rounded-b-md">🔐 Login</li></Link>
-                                </ul>
-                            </div>
-                            <Link href={"/store"}><li className="flex items-center gap-1">Store<IoIosArrowDown className="mt-1" /></li></Link>
-                            <li>Contact</li>
+                    {/* Mobile Menu */}
+                    <div className={`md:hidden fixed top-0 z-20 bg-black text-white h-screen w-[50vw] duration-500 p-5 ${toggle ? "left-0" : "left-[-100%]"}`}>
+                        <ul className="flex flex-col gap-4 text-sm font-bold">
+                            <Link href="/"><li className="cursor-pointer">Home</li></Link>
+                            {user.data && <Link href="/profile"><li className="cursor-pointer">👤 Profile</li></Link>}
+                            <Link href="/about"><li className="cursor-pointer">📘 About</li></Link>
+                            <Link href="/contact"><li className="cursor-pointer">📞 Contact</li></Link>
+                            <Link href="/login"><li className="cursor-pointer">🔐 Login</li></Link>
+                            <Link href="/store"><li className="cursor-pointer">🛍️ Store</li></Link>
                         </ul>
                     </div>
 
-                    {/* Login + Profile Icon + Cart */}
-                    <div className="flex gap-4 sm:gap-5 items-center">
-                        {/* ✅ Added Profile Icon */}
-                        <Link href="/profile">
-                            <div className="text-2xl text-[#01A49E] cursor-pointer">
+                    {/* Profile + Cart */}
+                    <div className="flex gap-5 items-center relative">
+                        {/* Profile Icon + Hover Menu */}
+                        {/* Profile Icon + Hover Dropdown */}
+                        <div
+                            className="relative group"
+                        >
+                            <div className="flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
                                 <FaUserCircle />
+                                <span className="text-xs mt-1 text-gray-700 font-semibold">Profile</span>
                             </div>
-                        </Link>
 
-                        <div className="uppercase text-left">
-                            {
-                                user.data != null ? (
+                            {/* Dropdown menu shown on hover of parent .group */}
+                            <div className="absolute right-0 top-[40px] bg-white border border-gray-200 shadow-md rounded-md w-52 z-50 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                {user.data ? (
                                     <>
-                                        <div className="text-xs text-gray-500">{user?.data?.name}</div>
-                                        <div onClick={logoutHandler} className="font-semibold cursor-pointer hover:underline">
-                                            LOGOUT
+                                        <div className="px-4 py-2 text-xs text-gray-600">
+                                            Hello, <span className="font-semibold">{user.data.name}</span>
+                                        </div>
+                                        <Link href="/profile">
+                                            <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">👤 My Profile</div>
+                                        </Link>
+                                        <div
+                                            onClick={logoutHandler}
+                                            className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
+                                        >
+                                            🔓 Logout
                                         </div>
                                     </>
                                 ) : (
-                                    <>
-                                        <div className="text-xs text-gray-500">WELCOME</div>
-                                        <Link href="/login?ref=header">
-                                            <div className="font-semibold cursor-pointer hover:underline">
-                                                LOG IN / REGISTER
-                                            </div>
-                                        </Link>
-                                    </>
-                                )
-                            }
+                                    <Link href="/login?ref=header">
+                                        <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">
+                                            🔐 Login / Register
+                                        </div>
+                                    </Link>
+                                )}
+                            </div>
                         </div>
 
-                        <Link href={"/cart"}>
-                            <div className="flex gap-2 items-center">
-                                <div className="bg-[#EBEEF6] text-2xl w-[40px] h-[40px] relative rounded-[20px] flex items-center justify-center">
+
+                        {/* Cart Icon */}
+                        <Link href="/cart">
+                            <div className="relative flex items-center gap-2 cursor-pointer">
+                                <div className="bg-[#EBEEF6] text-2xl w-[40px] h-[40px] rounded-full flex justify-center items-center relative">
                                     <MdShoppingCart />
-                                    <span className="bg-[#01A49E] rounded-[10px] text-white text-[11px] absolute bottom-[-8px] right-[-5px] flex items-center justify-center w-[20px] h-[20px]">
+                                    <span className="absolute bottom-[-6px] right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
                                         {cart?.items?.length ?? 0}
                                     </span>
                                 </div>
-                                <div className="text-left">
-                                    <p className="text-[#666666] text-[11px] font-normal uppercase">cart</p>
-                                </div>
+                                <p className="text-[#666666] text-xs uppercase">cart</p>
                             </div>
                         </Link>
                     </div>
                 </nav>
             </div>
 
-            {/* Bottom Search + Info */}
-            <div className='bg-[#01A49E] '>
-                <div className="rounded-[10px] mx-auto max-w-[1360px] gap-3 md:gap-5 flex flex-col md:flex-row items-center justify-between p-3 px-4 ">
-                    {/* Search Bar */}
-                    <div className="w-full md:w-[50%] flex gap-2 rounded-3xl p-2 items-center bg-white">
-                        <div className="text-[13px] whitespace-nowrap flex items-center gap-2 font-bold">
+            {/* Bottom Search */}
+            <div className="bg-[#01A49E]">
+                <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 p-3 px-4">
+                    <div className="w-full md:w-[50%] flex items-center gap-2 bg-white rounded-full p-2">
+                        <div className="text-sm font-bold whitespace-nowrap flex items-center gap-2 cursor-pointer">
                             All Categories <IoIosArrowDown className="mt-1" />
                         </div>
-                        <input className="text-[13px] outline-none p-1 w-full" type="text" placeholder="Search anything..." />
-                        <IoMdSearch className="text-[18px]" />
+                        <input className="text-sm p-1 outline-none w-full" placeholder="Search anything..." />
+                        <IoMdSearch className="text-lg cursor-pointer" />
                     </div>
-
-                    {/* Info Text */}
-                    <div className="hidden font-medium md:flex flex-wrap md:flex-nowrap text-white justify-center md:justify-around gap-2 w-full md:w-[50%] uppercase text-[13px] text-center">
-                        <p>free shipping over $199</p>
+                    <div className="hidden md:flex gap-5 text-white text-xs font-medium uppercase justify-center md:justify-end w-full md:w-[50%] text-center">
+                        <p>Free shipping over $199</p>
                         <p>30 days money back</p>
                         <p>100% secure payment</p>
                     </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { axiosApiInstance } from "../library/helper";
+import { axiosApiInstance, notify } from "../library/helper";
 
 
 
@@ -25,6 +25,7 @@ export default function AdminLogin() {
         axiosApiInstance.post("admin/login", data, { withCredentials: true }).then(
             (res) => {
                 console.log(res)
+                notify(res.data.msg, res.data.flag)
                 if (res.data.flag == 1) {
                     localStorage.setItem("admin", JSON.stringify(res.data.admin))
                     localStorage.setItem("loginAt", new Date());

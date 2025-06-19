@@ -4,11 +4,18 @@ export const metadata = {
 }
 
 import '../globals.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+
+      <body>
+        <ToastContainer
+          autoClose={1200}
+        />
+        {children}
+      </body>
     </html>
   )
 }

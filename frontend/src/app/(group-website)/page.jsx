@@ -106,7 +106,7 @@ export default async function page() {
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
             {topbrand.map((brand, index) => (
-              <Link href={"/store"}>
+              <Link key={index} href={"/store"}>
                 <div key={index} className="flex cursor-pointer items-center justify-center p-2 hover:scale-105 transition-transform">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/brand/${brand.brandImage}`}

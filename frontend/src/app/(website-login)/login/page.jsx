@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { axiosApiInstance } from '@/app/library/helper';
+import { axiosApiInstance, notify } from '@/app/library/helper';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/features/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 function LoginForm() {
     const params = useSearchParams();
@@ -13,8 +14,15 @@ function LoginForm() {
     const dispatch = useDispatch();
     const [error, seterror] = useState();
 
-    const lsCart = JSON.parse(localStorage.getItem('cart'));
-    const cart = lsCart ? lsCart.items : null;
+    const [cart, setCart] = useState(null);
+
+    // ✅ Read cart from localStorage only on client side
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const lsCart = JSON.parse(localStorage.getItem('cart'));
+            setCart(lsCart ? lsCart.items : null);
+        }
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +33,7 @@ function LoginForm() {
 
         axiosApiInstance.post("user/login", data).then(
             async (res) => {
+                notify(res.data.msg, res.data.flag)
                 if (res.data.flag === 1) {
 
                     console.log(res)
@@ -72,10 +81,10 @@ function LoginForm() {
                         router.push("/")
 
                     }
-                } 
+                }
                 else if (res.data.flag == 0) {
                     seterror(res.data.msg)
-                  
+
                 }
             }
         ).catch(
@@ -129,6 +138,7 @@ function LoginForm() {
 function RegisterForm() {
     const router = useRouter()
     const dispatch = useDispatch();
+    const [error, seterror] = useState();
     const registerSubmit = (e) => {
         e.preventDefault();
         const data = {
@@ -139,6 +149,7 @@ function RegisterForm() {
 
         axiosApiInstance.post("user/register", data).then(
             (res) => {
+                notify(res.data.msg, res.data.flag)
                 if (res.data.flag === 1) {
 
                     console.log(res)
@@ -149,6 +160,8 @@ function RegisterForm() {
 
                     }));
                     router.push("/")
+                } else if (res.data.flag == 0) {
+                    seterror(res.data.msg)
                 }
             }
         ).catch(
@@ -191,6 +204,7 @@ function RegisterForm() {
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-teal-500 focus:outline-none"
                     />
                 </div>
+                <span className='text-red-500'>{error}</span>
                 {/* <div>
                     <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
                     <input
