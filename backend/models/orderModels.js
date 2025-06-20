@@ -24,16 +24,45 @@ const shippingDetailsSchema = new Schema({
 // Define the main order schema
 const orderSchema = new Schema({
     user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    product_details: { type: [productDetailsSchema], required: true },
+    product_details: [
+        {
+            product_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "product"  // आपके Product model का नाम
+            },
+            qty: Number,
+            price: Number,
+            total: Number
+        }
+    ],
     order_total: { type: Number, required: true },
     payment_mode: { type: Boolean, required: true }, // 1 for prepaid, 0 for COD
     razorpay_order_id: { type: String, default: null },
     razorpay_payment_id: { type: String, default: null },
+    payment_status: {
+        type: String,
+        enum: ['pending', 'success', 'failed'],
+        default: 'pending'
+    },
+
     order_status: {
         type: Number,
         enum: [0, 1, 2, 3, 4, 5, 6, 7],
         default: 0 // order placed
-    }, // Assuming 0 to 7 are different status codes
+
+        // Status Codes Meaning:
+        // 0 = Order Placed
+        // 1 = Confirmed
+        // 2 = Processing
+        // 3 = Shipped
+        // 4 = Out for Delivery
+        // 5 = Delivered
+        // 6 = Cancelled
+        // 7 = Returned
+
+
+
+    },
     shipping_details: { type: shippingDetailsSchema, required: true }
 }, { timestamps: true });
 

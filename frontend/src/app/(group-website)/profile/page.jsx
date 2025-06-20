@@ -1,45 +1,33 @@
 'use client';
-import { axiosApiInstance, notify } from '@/app/library/helper';
-import { setUser } from '@/redux/features/userSlice';
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-
-
+import { getUserOrders } from '@/app/library/api-call';
+import { axiosApiInstance, notify } from '@/app/library/helper';
+import { setUser } from '@/redux/features/userSlice';
 
 export default function Profile() {
+  const [hasMounted, setHasMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('account');
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [userOrders, setUserOrders] = useState([]);
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', userId: '' });
+  const [shippingAddresses, setShippingAddresses] = useState([{ addressLine1: '', addressLine2: '', city: '', state: '', postalCode: '', country: '', contact: '' }]);
+  const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
   const token = useSelector((state) => state.user.token);
-  const dispatch = useDispatch();
 
-
-
-  if (!user) {
-    return <p>Loading...</p>; // या null या spinner
-  }
-
-  const [hasMounted, setHasMounted] = useState(false);
-
+  console.log(userOrders)
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  console.log(user)
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    userId: ''
-  });
-
-
-
   useEffect(() => {
     if (user) {
+      fetchUserOrders();
       setFormData({
         firstName: user.firstName || '',
         lastName: user.lastName || '',
@@ -47,79 +35,48 @@ export default function Profile() {
         phone: user.phone || '',
         userId: user._id
       });
+
+      if (user.shipping_address?.length) {
+        setShippingAddresses(user.shipping_address);
+      }
     }
   }, [user]);
 
-
-
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const fetchUserOrders = async () => {
+    const response = await getUserOrders(user._id);
+    setUserOrders(response.orders); // ✅ fix
   };
 
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const res = await axiosApiInstance.put('user/update-profile', formData);
-
-      console.log(res)
       if (res.data.flag === 1) {
         dispatch(setUser({ data: res.data.user, token }));
-        notify(res.data.msg, res.data.flag);
-      } else {
-        notify(res.data.msg, res.data.flag);
       }
+      notify(res.data.msg, res.data.flag);
     } catch (err) {
-      console.log(err);
-      notify('error', 'Something went wrong!');
+      console.error(err);
+      notify('Something went wrong!', 0);
     }
   };
 
-  // for address
-
-
-  const [shippingAddresses, setShippingAddresses] = useState([
-    {
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: '',
-      contact: '',
-    },
-  ]);
-
-  // Load user addresses
-  useEffect(() => {
-    if (user?.shipping_address) {
-      setShippingAddresses(user.shipping_address.length ? user.shipping_address : shippingAddresses);
-    }
-  }, [user]);
-
   const handleAddressChange = (index, field, value) => {
-    const updated = [...shippingAddresses];
-    updated[index][field] = value;
+    const updated = shippingAddresses.map((addr, i) => i === index ? { ...addr, [field]: value } : addr);
     setShippingAddresses(updated);
   };
 
   const handleAddressSubmit = async (e, index) => {
     e.preventDefault();
     try {
-      const payload = {
-        ...shippingAddresses[index],
-        index,
-        userId: user._id,
-      };
+      const payload = { ...shippingAddresses[index], index, userId: user._id };
       const res = await axiosApiInstance.put('user/update-address', payload);
-
-      if (res.data.flag === 1) {
+      if (res.data.flag === 1 && res.data.user?.shipping_address) {
         dispatch(setUser({ data: res.data.user, token }));
-        if (res.data.user?.shipping_address) {
-          setShippingAddresses(res.data.user.shipping_address);
-        }
+        setShippingAddresses(res.data.user.shipping_address);
       }
       notify(res.data.msg, res.data.flag);
     } catch (err) {
@@ -130,49 +87,20 @@ export default function Profile() {
 
   const addNewAddress = () => {
     if (shippingAddresses.length < 3) {
-      setShippingAddresses([
-        ...shippingAddresses,
-        {
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          state: '',
-          postalCode: '',
-          country: '',
-          contact: '',
-        },
-      ]);
+      setShippingAddresses([...shippingAddresses, { addressLine1: '', addressLine2: '', city: '', state: '', postalCode: '', country: '', contact: '' }]);
     }
   };
-  /// for profile pic
-
-  //  const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setSelectedFile(file);
-  //     setPreview(URL.createObjectURL(file)); // Display preview
-  //   }
-  // }
 
   const handleUploadPhoto = async () => {
-    if (!selectedFile || !user?._id) {
-      return notify("Please select an image first", 0);
-    }
-
+    if (!selectedFile || !user?._id) return notify("Please select an image first", 0);
     const formData = new FormData();
     formData.append("profileImage", selectedFile);
     formData.append("userId", user._id);
-
     try {
-      const res = await axiosApiInstance.put('user/upload-profile-image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
+      const res = await axiosApiInstance.put('user/upload-profile-image', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       if (res.data.flag === 1) {
         dispatch(setUser({ data: res.data.user, token }));
-        setPreview(null); // optional: reset preview
+        setPreview(null);
         setSelectedFile(null);
         notify(res.data.msg, 1);
       } else {
@@ -184,19 +112,6 @@ export default function Profile() {
     }
   };
 
-
-  const TabButton = ({ tabKey, label }) => (
-    <button
-      onClick={() => setActiveTab(tabKey)}
-      className={`w-full flex items-center cursor-pointer justify-between px-4 py-2 text-sm font-medium rounded-lg transition ${activeTab === tabKey
-        ? 'text-white bg-teal-500'
-        : 'text-gray-700 bg-white border hover:bg-gray-100'
-        }`}
-    >
-      {label} <span>→</span>
-    </button>
-  );
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -205,50 +120,56 @@ export default function Profile() {
     }
   };
 
+  const handlePasswordChange = (e) => setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
 
-
-  /// for password 
-
-
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  });
-
-
-  const handlePasswordChange = (e) => {
-    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      return notify('New Password and Confirm Password do not match', 'error');
+    }
+    try {
+      const res = await axiosApiInstance.post('user/change-password', { ...passwordData, userId: user._id });
+      notify('Password changed successfully', 'success');
+      dispatch(setUser(res.data.user));
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (err) {
+      console.log(err);
+      notify(err?.response?.data?.msg || 'Password change failed', 'error');
+    }
   };
 
- const handlePasswordSubmit = async (e) => {
-  e.preventDefault();
+  if (!hasMounted || !user) return <div className="w-full h-screen flex items-center justify-center"><p className="text-gray-500 text-sm">Loading profile...</p></div>;
+  const TabButton = ({ tabKey, label }) => (
+    <button
+      onClick={() => setActiveTab(tabKey)}
+      className={`w-full text-left cursor-pointer px-4 py-2 text-sm font-medium rounded-lg transition ${activeTab === tabKey
+        ? 'text-white bg-teal-500'
+        : 'text-gray-700 bg-white border hover:bg-gray-100'
+        }`}
+    >
+      {label}
+    </button>
+  );
 
-  if (passwordData.newPassword !== passwordData.confirmPassword) {
-    return notify('New Password and Confirm Password do not match', 'error');
-  }
 
-  try {
-    const res = await axiosApiInstance.post('user/change-password', {
-      ...passwordData,
-      userId: user._id // include this
-    });
+  const getOrderStatusLabel = (status) => {
+    switch (status) {
+      case 0:
+        return 'Placed';
+      case 1:
+        return 'Confirmed';
+      case 2:
+        return 'Shipped';
+      case 3:
+        return 'Delivered';
+      case 4:
+        return 'Cancelled';
+      default:
+        return 'Unknown';
+    }
+  };
 
-    notify('Password changed successfully', 'success');
 
-    // Optional: update Redux if your backend returns updated user
-    dispatch(setUser(res.data.user));
-
-    setPasswordData({
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: ''
-    });
-  } catch (err) {
-    console.log(err);
-    notify(err?.response?.data?.msg || 'Password change failed', 'error');
-  }
-};
 
 
   return (
@@ -374,6 +295,81 @@ export default function Profile() {
               </form>
             </div>
           )}
+
+          {activeTab === 'order' && (
+            <div>
+              <h2 className="text-[24px] font-bold mb-6">My Orders</h2>
+
+              {userOrders && userOrders.length > 0 ? (
+                userOrders.map((order) => (
+                  <div
+                    key={order._id}
+                    className="mb-6 border cursor-pointer border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+                  >
+                    {/* Order Header */}
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="space-y-1">
+                        <p className="text-sm text-gray-500">
+                          <span className="text-gray-800 font-semibold">Order Date:</span>{' '}
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
+                        <p className="text-sm">
+                          <span className="text-gray-800 font-semibold">Payment Status:</span>{' '}
+                          <span
+                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${order.payment_status === 'paid'
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                              }`}
+                          >
+                            {order.payment_status}
+                          </span>
+                        </p>
+                        <p className="text-sm">
+                          <span className="text-gray-800 font-semibold">Order Status:</span>{' '}
+                          <span
+                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${order.order_status === 0
+                              ? 'bg-blue-100 text-blue-700'
+                              : 'bg-gray-100 text-gray-700'
+                              }`}
+                          >
+                         {getOrderStatusLabel(order.order_status)}
+                          </span>
+                        </p>
+                      </div>
+
+                      <div className="text-right font-bold text-lg text-teal-600">
+                        ₹{order.order_total}
+                      </div>
+                    </div>
+
+                    {/* Products List */}
+                    <div className="divide-y divide-gray-100">
+                      {order.product_details.map((item, index) => (
+                        <div key={index} className="flex items-center gap-4 py-4">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${item.product_id?.thumbnail}`}
+                            alt={item.product_id?.name}
+                            className="w-16 h-16 object-cover rounded-lg border"
+                            onError={(e) => (e.target.src = '/placeholder.png')}
+                          />
+                          <div className="flex-1">
+                            <p className="font-semibold text-gray-800">{item.product_id?.name}</p>
+                            <p className="text-sm text-gray-500">
+                              Qty: {item.qty} | Price: ₹{item.price}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">You have no orders yet.</p>
+              )}
+            </div>
+          )}
+
+
           {activeTab === 'address' && (
             <div>
               <h2 className="text-[24px] font-bold mb-6">My Address</h2>
@@ -403,7 +399,7 @@ export default function Profile() {
                     <input
                       name="addressLine2"
                       value={address.addressLine2}
-                      onChange={(e) => handleaddChange(index, 'addressLine2', e.target.value)}
+                      onChange={(e) => handleAddressChange(index, 'addressLine2', e.target.value)}
                       placeholder="Apartment, suite, unit, etc. (optional)"
                       className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                     />
@@ -418,7 +414,7 @@ export default function Profile() {
                         required
                         name="city"
                         value={address.city}
-                        onChange={(e) => handleaddChange(index, 'city', e.target.value)}
+                        onChange={(e) => handleAddressChange(index, 'city', e.target.value)}
                         placeholder="Your city"
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                       />
@@ -432,7 +428,7 @@ export default function Profile() {
                         required
                         name="state"
                         value={address.state}
-                        onChange={(e) => handleaddChange(index, 'state', e.target.value)}
+                        onChange={(e) => handleAddressChange(index, 'state', e.target.value)}
                         placeholder="Your state"
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                       />
@@ -448,7 +444,7 @@ export default function Profile() {
                         required
                         name="postalCode"
                         value={address.postalCode}
-                        onChange={(e) => handleaddChange(index, 'postalCode', e.target.value)}
+                        onChange={(e) => handleAddressChange(index, 'postalCode', e.target.value)}
                         placeholder="123456"
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                       />
@@ -462,7 +458,7 @@ export default function Profile() {
                         required
                         name="country"
                         value={address.country}
-                        onChange={(e) => handleaddChange(index, 'country', e.target.value)}
+                        onChange={(e) => handleAddressChange(index, 'country', e.target.value)}
                         placeholder="Your country"
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                       />
@@ -474,7 +470,7 @@ export default function Profile() {
                     <input
                       name="contact"
                       value={address.contact}
-                      onChange={(e) => handleaddChange(index, 'contact', e.target.value)}
+                      onChange={(e) => handleAddressChange(index, 'contact', e.target.value)}
                       placeholder="+91 9876543210"
                       className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-teal-500"
                     />

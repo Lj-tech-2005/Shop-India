@@ -65,11 +65,12 @@ const Checkout = () => {
             currency: "INR",
             name: "Apna Market",
             description: "Test Transaction",
-            order_id: response.data.razorpay_order_id, // Generate order_id on server
+            order_id: response.data.razorpay_order_id,
             handler: (razorpay_response) => {
+              // SUCCESS Handler
               axiosApiInstance.post("/order/success", {
-                order_id: data.order_id, // ✅ not response.data
-                user_id: user._id,       // ✅ correct key
+                order_id: data.order_id,
+                user_id: user._id,
                 razorpay_response
               }).then((res) => {
                 if (res.data.flag === 1) {
@@ -83,30 +84,34 @@ const Checkout = () => {
                 console.error(err);
                 notify("Something went wrong while saving payment info.", 0);
               });
-            }
-            ,
+            },
             prefill: {
-              name: user?.data?.name,
-              email: user?.data?.email,
-              contact: user?.data?.contact,
+              name: user?.name,
+              email: user?.email,
+              contact: user?.contact,
             },
             theme: {
               color: "#F37254",
             },
+            modal: {
+              ondismiss: () => {
+                // Called when user closes the Razorpay popup
+                axiosApiInstance.post("/order/failed", {
+                  order_id: data.order_id,
+                  user_id: user._id
+                }).then((response) => {
+                  notify(response.data.message, response.data.flag);
+                  router.push("/payment-failed"); // ✅ redirect to failure page
+                }).catch((err) => {
+                  console.error("Error in marking order failed:", err);
+                });
+              }
+            }
           };
+
 
           const razorpayInstance = new Razorpay(options);
           razorpayInstance.open();
-
-          // razorpayInstance.error(
-
-          //   (razorpay_error)=>{
-
-          //     console.log(razorpay_error)
-
-          //   }
-
-          // )
 
         }
 

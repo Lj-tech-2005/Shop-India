@@ -105,9 +105,19 @@ const getproduct = async (id = null, category_slug = null, brand = null, color =
     }
 };
 
+const getUserOrders = async (user_id) => {
+  const API = `order/getUserOrder/${user_id}`;
+  try {
+    const response = await axiosApiInstance.get(API);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user orders:", error);
+    return null;
+  }
+};
 
 
 
-export { getColor, getCategory, getproduct, getBrand };
+export { getColor, getCategory, getproduct, getBrand,getUserOrders };
 
 

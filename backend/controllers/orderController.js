@@ -86,49 +86,98 @@ const orderController = {
       });
     }
   },
-async orderSuccess(req, res) {
-  try {
-    const { order_id, user_id, razorpay_response } = req.body;
+  async orderSuccess(req, res) {
+    try {
+      const { order_id, user_id, razorpay_response } = req.body;
 
-    const order = await orderModel.findById(order_id);
-    if (!order) {
-      return res.send({ msg: "order not found", flag: 0 });
+      const order = await orderModel.findById(order_id);
+      if (!order) {
+        return res.send({ message: "order not found", flag: 0 });
+      }
+
+      const user = await userModels.findById(user_id);
+      if (!user) {
+        return res.send({ message: "user not found", flag: 0 });
+      }
+
+      if (order.order_status === 1) {
+        return res.send({ message: "order already paid", flag: 0 });
+      }
+
+      const generated_signature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(order.razorpay_order_id + "|" + razorpay_response.razorpay_payment_id)
+        .digest("hex");
+
+      if (generated_signature !== razorpay_response.razorpay_signature) {
+        return res.send({ message: "payment verification failed", flag: 0 });
+      }
+
+      order.order_status = 1;
+      order.payment_status = 'success';
+      order.razorpay_payment_id = razorpay_response.razorpay_payment_id;
+
+      await order.save();
+      await CartModel.deleteMany({ user_id });
+
+      return res.send({
+        message: "Order Placed successfully",
+        order_id: order._id,
+        flag: 1
+      });
+    } catch (error) {
+      console.error("orderSuccess error:", error); // log for debugging
+      return res.send({ message: "internal server error", flag: 0 });
     }
+  },
+  async orderFailed(req, res) {
+    try {
+      const { order_id, user_id } = req.body;
 
-    const user = await userModels.findById(user_id);
-    if (!user) {
-      return res.send({ msg: "user not found", flag: 0 });
+      const order = await orderModel.findById(order_id);
+      if (!order) {
+        return res.send({ message: "order not found", flag: 0 });
+      }
+
+      if (!order.user_id.equals(user_id)) {
+        return res.send({ message: "unauthorized user", flag: 0 });
+      }
+
+      // If already marked failed, skip update
+      if (order.payment_status === 'failed') {
+        return res.send({ message: "order already marked as failed", flag: 0 });
+      }
+
+      order.payment_status = 'failed';
+      order.order_status = 6; // Assuming 6 = payment failed/cancelled
+      await order.save();
+
+      return res.send({ message: "Order marked as failed", flag: 1 });
+    } catch (error) {
+      console.error("orderFailed error:", error);
+      return res.send({ message: "internal server error", flag: 0 });
     }
+  },
+  async getUserOrder(req, res) {
+    try {
+      const { user_id } = req.params;
 
-    if (order.order_status === 1) {
-      return res.send({ msg: "order already paid", flag: 0 });
+      const orders = await orderModel
+        .find({ user_id })
+        .sort({ createdAt: -1 })
+        .populate("product_details.product_id", "name thumbnail"); // ✅ यहीं से name और image आएगा
+
+      if (orders.length === 0) {
+        return res.send({ message: "No orders found", flag: 0 });
+      }
+
+      res.send({ message: "Orders fetched successfully", flag: 1, orders });
+    } catch (error) {
+      console.log(error)
+      console.error("Error in getUserOrders:", error.message);
+      res.send({ message: "Internal server error", flag: 0 });
     }
-
-    const generated_signature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(order.razorpay_order_id + "|" + razorpay_response.razorpay_payment_id)
-      .digest("hex");
-
-    if (generated_signature !== razorpay_response.razorpay_signature) {
-      return res.send({ msg: "payment verification failed", flag: 0 });
-    }
-
-    order.order_status = 1;
-    order.razorpay_payment_id = razorpay_response.razorpay_payment_id;
-
-    await order.save();
-    await CartModel.deleteMany({ user_id });
-
-    return res.send({
-      message: "Order Placed successfully",
-      order_id: order._id,
-      flag: 1
-    });
-  } catch (error) {
-    console.error("orderSuccess error:", error); // log for debugging
-    return res.send({ msg: "internal server error", flag: 0 });
   }
-}
 
 };
 
