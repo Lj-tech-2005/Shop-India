@@ -459,12 +459,12 @@ export default async function page() {
 
           {/* Heading */}
           <h2 className="text-lg md:text-xl font-semibold text-black">
-            Swoo – #1 Online Marketplace for Technology
+            Shopindia – #1 Online Marketplace for Technology
           </h2>
 
           {/* First Paragraph */}
           <p className="text-sm md:text-base leading-relaxed">
-            Swoo is your ultimate destination for the latest in technology. From smart gadgets and electronics to home appliances and wearables,
+            Shop india is your ultimate destination for the latest in technology. From smart gadgets and electronics to home appliances and wearables,
             we bring together top brands and unbeatable deals all in one place. Shop with confidence and convenience, with fast delivery
             and secure payment options.
           </p>
@@ -472,8 +472,8 @@ export default async function page() {
           {/* Second Paragraph */}
           <p className="text-sm md:text-base leading-relaxed">
             Whether you're upgrading your workspace, enhancing your home with smart tech, or searching for the perfect gift,
-            Swoo has everything you need. Our curated collections make it easy to explore trending products, exclusive launches,
-            and seasonal discounts tailored just for you. Discover innovation made accessible — only at Swoo.
+            Shop india has everything you need. Our curated collections make it easy to explore trending products, exclusive launches,
+            and seasonal discounts tailored just for you. Discover innovation made accessible — only at Shopindia.
           </p>
 
         </div>

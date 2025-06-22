@@ -43,11 +43,11 @@ export default function Header() {
                         <span className="font-bold text-xs">(025) 3886 25 16</span>
                     </div>
                     <div className="flex gap-4 items-center text-sm">
-                        <span className="cursor-pointer">Sell on Swoo</span>
+                        <span className="cursor-pointer">Sell on Shop india</span>
                         <span className="cursor-pointer">Order Track</span>
-                        <span className="border-r pr-2 cursor-pointer">USD</span>
+                        <span className="border-r pr-2 cursor-pointer">IND</span>
                         <span className="flex items-center gap-1 cursor-pointer">
-                            <img src="/eng.png" className="w-4 h-4" />
+                            <img src="/ind.jpg" className="w-4 h-4" />
                             Eng <IoIosArrowDown />
                         </span>
                     </div>
@@ -57,18 +57,21 @@ export default function Header() {
                 <nav className="mt-5 flex flex-wrap md:flex-nowrap justify-between items-center gap-4 px-2 sm:px-5">
                     {/* Logo & Menu */}
                     <div className="flex justify-between w-full md:w-auto items-center gap-4">
-                        <div className="flex items-center gap-2 cursor-pointer">
-                            <div className="bg-[#01A49E] rounded-full w-[55px] h-[49px] flex justify-center items-center">
+                        <Link href={"/"}>
+                            <div className="flex items-center gap-2 cursor-pointer">
+                                {/* <div className="bg-[#01A49E] rounded-full w-[55px] h-[49px] flex justify-center items-center">
                                 <img src="/vector1.png" className="mt-2" />
+                            </div> */}
+                                <img src="/2.png" alt="logo" width={65} />
+                                <div className="text-[18px] font-bold leading-5 font-mono">
+                                    <p>Shop</p>
+                                    <p>India</p>
+                                </div>
                             </div>
-                            <div className="text-sm font-bold leading-tight">
-                                <p>SWOO</p>
-                                <p>TECH MART</p>
-                            </div>
-                        </div>
+                        </Link>
 
                         {/* Desktop Nav Items */}
-                        <ul className="hidden md:flex items-center gap-5 font-bold text-sm">
+                        <ul className="hidden ms-3 md:flex items-center gap-5 font-bold text-sm">
                             <Link href="/"><li className="cursor-pointer">Home</li></Link>
 
                             {/* Pages Dropdown */}
@@ -187,7 +190,7 @@ export default function Header() {
                         <IoMdSearch className="text-lg cursor-pointer" />
                     </div>
                     <div className="hidden md:flex gap-5 text-white text-xs font-medium uppercase justify-center md:justify-end w-full md:w-[50%] text-center">
-                        <p>Free shipping over $199</p>
+                        <p>Free shipping over ₹199</p>
                         <p>30 days money back</p>
                         <p>100% secure payment</p>
                     </div>

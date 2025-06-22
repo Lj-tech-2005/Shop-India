@@ -39,9 +39,10 @@ const orderSchema = new Schema({
     payment_mode: { type: Boolean, required: true }, // 1 for prepaid, 0 for COD
     razorpay_order_id: { type: String, default: null },
     razorpay_payment_id: { type: String, default: null },
+    cancel_reason: { type: String },
     payment_status: {
         type: String,
-        enum: ['pending', 'success', 'failed'],
+        enum: ['pending', 'success', 'failed', 'cancelled', 'refunded'],
         default: 'pending'
     },
 

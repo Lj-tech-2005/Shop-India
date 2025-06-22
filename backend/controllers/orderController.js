@@ -177,7 +177,61 @@ const orderController = {
       console.error("Error in getUserOrders:", error.message);
       res.send({ message: "Internal server error", flag: 0 });
     }
-  }
+  },
+  async cancelOrder(req, res) {
+    try {
+      const { order_id, user_id, reason } = req.body;
+
+      const order = await orderModel.findById(order_id);
+      if (!order) return res.send({ message: "Order not found", flag: 0 });
+      if (!order.user_id.equals(user_id)) return res.send({ message: "Unauthorized user", flag: 0 });
+      if (Number(order.payment_mode) !== 0) return res.send({ message: "Only COD orders can be cancelled", flag: 0 });
+      if (![0, 1].includes(order.order_status)) return res.send({ message: "Order cannot be cancelled at this stage", flag: 0 });
+
+      order.order_status = 6;
+      order.payment_status = "cancelled";
+
+      // 🔴 Optional: Save cancellation reason (only if you add field in model)
+      order.cancel_reason = reason || "Not specified";
+
+      await order.save();
+
+      return res.send({ message: "Order cancelled successfully", flag: 1 });
+    } catch (error) {
+      console.error("cancelOrder error:", error);
+      return res.send({ message: "Internal server error", flag: 0 });
+    }
+  },
+
+  async returnOrder(req, res) {
+    try {
+      const { order_id, user_id } = req.body;
+
+      const order = await orderModel.findById(order_id);
+      if (!order) {
+        return res.send({ message: "Order not found", flag: 0 });
+      }
+
+      if (!order.user_id.equals(user_id)) {
+        return res.send({ message: "Unauthorized user", flag: 0 });
+      }
+
+      // Only allow return if order is delivered
+      if (order.order_status !== 5) {
+        return res.send({ message: "Only delivered orders can be returned", flag: 0 });
+      }
+
+      order.order_status = 7; // Returned
+      await order.save();
+
+      return res.send({ message: "Return request submitted", flag: 1 });
+    } catch (error) {
+      console.error("returnOrder error:", error);
+      return res.send({ message: "Internal server error", flag: 0 });
+    }
+  },
+  
+
 
 };
 

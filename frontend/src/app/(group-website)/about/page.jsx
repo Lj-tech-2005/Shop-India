@@ -38,7 +38,7 @@ export default function AboutPage() {
 
                     <div className="md:w-2/3 flex flex-col sm:flex-row justify-between gap-6 text-center sm:text-left">
                         <div>
-                            <p className="text-[40px] font-bold text-gray-800">$12.5M</p>
+                            <p className="text-[40px] font-bold text-gray-800">₹12.5M</p>
                             <p className="text-sm text-gray-500">TOTAL REVENUE FROM 2001 - 2023</p>
                         </div>
                         <div>
@@ -85,7 +85,7 @@ export default function AboutPage() {
                             <div className="p-5 rounded-full bg-teal-500 " />
                         </div>
                         <p className="text-[14px] mt-8 text-gray-600">
-                            Swco Tech Mart just distribute 100% authorized products & guarantee quality. Nulla porta nulla nec orci
+                            Shop india just distribute 100% authorized products & guarantee quality. Nulla porta nulla nec orci
                             vulputate, id rutrum sapien varius.
                         </p>
                     </div>

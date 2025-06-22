@@ -7,4 +7,6 @@ orderRouter.post('/order-place', orderController.orderPlace);
 orderRouter.post('/success', orderController.orderSuccess);
 orderRouter.post('/Failed', orderController.orderFailed);
 orderRouter.get('/getUserOrder/:user_id', orderController.getUserOrder);
+orderRouter.post('/cancel-order', orderController.cancelOrder);
+orderRouter.post('/return-order', orderController.returnOrder);
 module.exports = orderRouter;

@@ -16,14 +16,14 @@ export default function Footer() {
                     {/* Left Part */}
                     <div>
                         <h3 className="font-bold text-[18px]  mb-2 text-black text-base">
-                            SWOO - 1ST NYC TECH ONLINE MARKET
+                            SHOP INDIA - 1ST NYC TECH ONLINE MARKET
                         </h3>
                         <p className="text-xs mt-9">HOTLINE 24/7</p>
                         <p className="text-[30px] font-bold text-[#E15E43]">(025) 3686 25 16</p>
                         <p className="mt-2 font-normal text-[14px]">
                             257 Thatcher Road St, Brooklyn, Manhattan, NY 10092
                         </p>
-                        <p className="font-normal text-[14px]">contact@swootechmart.com</p>
+                        <p className="font-normal text-[14px]">contact@shopindiamart.com</p>
 
                         {/* Social Icons */}
                         <div className="flex gap-3 mt-9 text-gray-600 text-base">
@@ -146,7 +146,7 @@ export default function Footer() {
 
                 {/* Bottom Footer */}
                 <div className="border-t border-[#99999955] text-[14px] font-normal py-6 px-4 sm:px-6 lg:px-8 text-xs flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p>© 2024 <span className="font-bold">Shawonetc3</span>. All Rights Reserved</p>
+                    <p>© 2024 <span className="font-bold">Shopindia</span>. All Rights Reserved</p>
                     <div className="flex items-center gap-4 flex-wrap justify-center">
                         <img src="pay1.png" alt="visa" className="h-4" />
                         <img src="pay2.png" alt="visa" className="h-4" />

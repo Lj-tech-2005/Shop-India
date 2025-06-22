@@ -154,21 +154,82 @@ export default function Profile() {
 
   const getOrderStatusLabel = (status) => {
     switch (status) {
-      case 0:
-        return 'Placed';
-      case 1:
-        return 'Confirmed';
-      case 2:
-        return 'Shipped';
-      case 3:
-        return 'Delivered';
-      case 4:
-        return 'Cancelled';
-      default:
-        return 'Unknown';
+      case 0: return 'Placed';
+      case 1: return 'Payment Successful';
+      case 2: return 'Processing';
+      case 3: return 'Shipped';
+      case 4: return 'Out for Delivery';
+      case 5: return 'Delivered';
+      case 6: return 'Cancelled';
+      case 7: return 'Returned';
+      default: return 'Unknown';
     }
   };
 
+  const getOrderStatusColor = (status) => {
+    switch (status) {
+      case 0: return 'bg-blue-100 text-blue-700';
+      case 1: return 'bg-green-100 text-green-700';
+      case 2: return 'bg-yellow-100 text-yellow-700';
+      case 3: return 'bg-indigo-100 text-indigo-700';
+      case 4: return 'bg-purple-100 text-purple-700';
+      case 5: return 'bg-emerald-100 text-emerald-700';
+      case 6: return 'bg-red-100 text-red-600';
+      case 7: return 'bg-orange-100 text-orange-600';
+      default: return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+ const handleCancelOrder = async (orderId) => {
+  const reasons = {
+    1: "Ordered by mistake",
+    2: "Found cheaper elsewhere",
+    3: "Shipping is taking too long",
+    4: "Other"
+  };
+
+  const reasonKey = prompt(
+    `Please select a reason number for cancellation:\n` +
+    Object.entries(reasons).map(([key, val]) => `${key}. ${val}`).join('\n')
+  );
+
+  if (!reasonKey || !reasons[reasonKey]) {
+    return notify("Order cancellation aborted or invalid reason selected.", 0);
+  }
+
+  const selectedReason = reasons[reasonKey];
+
+  try {
+    const res = await axiosApiInstance.post('/order/cancel-order', {
+      order_id: orderId,
+      user_id: user._id,
+      reason: selectedReason, // ✅ sending reason text, not number
+    });
+
+    notify(res.data.message, res.data.flag);
+    if (res.data.flag === 1) fetchUserOrders();
+  } catch (err) {
+    notify("Failed to cancel order", 0);
+    console.error(err);
+  }
+};
+
+
+
+  const handleReturnOrder = async (orderId) => {
+    try {
+      const res = await axiosApiInstance.post('/order/return-order', {
+        order_id: orderId,
+        user_id: user._id
+      });
+
+      notify(res.data.message, res.data.flag);
+      if (res.data.flag === 1) fetchUserOrders();
+    } catch (err) {
+      notify("Failed to return order", 0);
+      console.error(err);
+    }
+  };
 
 
 
@@ -295,7 +356,6 @@ export default function Profile() {
               </form>
             </div>
           )}
-
           {activeTab === 'order' && (
             <div>
               <h2 className="text-[24px] font-bold mb-6">My Orders</h2>
@@ -316,9 +376,11 @@ export default function Profile() {
                         <p className="text-sm">
                           <span className="text-gray-800 font-semibold">Payment Status:</span>{' '}
                           <span
-                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${order.payment_status === 'paid'
+                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${order.payment_status === 'success'
                               ? 'bg-green-100 text-green-700'
-                              : 'bg-yellow-100 text-yellow-700'
+                              : order.payment_status === 'pending'
+                                ? 'bg-yellow-100 text-yellow-700'
+                                : 'bg-red-100 text-red-600'
                               }`}
                           >
                             {order.payment_status}
@@ -327,12 +389,11 @@ export default function Profile() {
                         <p className="text-sm">
                           <span className="text-gray-800 font-semibold">Order Status:</span>{' '}
                           <span
-                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${order.order_status === 0
-                              ? 'bg-blue-100 text-blue-700'
-                              : 'bg-gray-100 text-gray-700'
-                              }`}
+                            className={`inline-block px-2 py-0.5 text-xs rounded-full font-semibold ${getOrderStatusColor(
+                              order.order_status
+                            )}`}
                           >
-                         {getOrderStatusLabel(order.order_status)}
+                            {getOrderStatusLabel(order.order_status)}
                           </span>
                         </p>
                       </div>
@@ -361,6 +422,28 @@ export default function Profile() {
                         </div>
                       ))}
                     </div>
+
+                    {/* Optional Cancel/Return Actions */}
+                    <div className="mt-4">
+                      {[0, 1, 2].includes(order.order_status) && Number(order.payment_mode) === 0 && (
+                        <button
+                          onClick={() => handleCancelOrder(order._id)}
+                          className="text-red-600 font-medium hover:underline text-sm"
+                        >
+                          Cancel Order
+                        </button>
+                      )}
+
+
+                      {order.order_status === 5 && (
+                        <button
+                          onClick={() => handleReturnOrder(order._id)}
+                          className="text-orange-600 font-medium hover:underline ml-4 text-sm"
+                        >
+                          Return Order
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))
               ) : (
@@ -368,6 +451,8 @@ export default function Profile() {
               )}
             </div>
           )}
+
+
 
 
           {activeTab === 'address' && (
