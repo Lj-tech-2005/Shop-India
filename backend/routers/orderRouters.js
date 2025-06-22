@@ -9,4 +9,5 @@ orderRouter.post('/Failed', orderController.orderFailed);
 orderRouter.get('/getUserOrder/:user_id', orderController.getUserOrder);
 orderRouter.post('/cancel-order', orderController.cancelOrder);
 orderRouter.post('/return-order', orderController.returnOrder);
+orderRouter.post("/buy-now", orderController.buyNow); 
 module.exports = orderRouter;

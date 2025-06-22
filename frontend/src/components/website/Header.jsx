@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { emptyCart, lstocart } from '@/redux/features/cartSlice';
 import { logoutUser, lstoUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { MdOutlineBookmarkBorder } from "react-icons/md";
 
 export default function Header() {
     const router = useRouter();
@@ -151,6 +153,12 @@ export default function Header() {
                                         >
                                             🔓 Logout
                                         </div>
+                                        <Link href="/wishlist">
+                                            <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"><FaRegHeart className='text-red-400' />My Wishlist</div>
+                                        </Link>
+                                        <Link href="/myorder">
+                                            <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"><MdOutlineBookmarkBorder />My Orders</div>
+                                        </Link>
                                     </>
                                 ) : (
                                     <Link href="/login?ref=header">

@@ -21,7 +21,7 @@ export default function Footer() {
                         <p className="text-xs mt-9">HOTLINE 24/7</p>
                         <p className="text-[30px] font-bold text-[#E15E43]">(025) 3686 25 16</p>
                         <p className="mt-2 font-normal text-[14px]">
-                            257 Thatcher Road St, Brooklyn, Manhattan, NY 10092
+                            Gopalpura mod, jaipur, Rajasthan, India
                         </p>
                         <p className="font-normal text-[14px]">contact@shopindiamart.com</p>
 
@@ -57,7 +57,7 @@ export default function Footer() {
                                 USD <ChevronDown className="w-3 h-3 ml-1" />
                             </div>
                             <div className="flex items-center gap-1 border border-[#99999933] cursor-pointer px-3 py-2 rounded">
-                                <img src="eng.png" alt="" /> Eng <ChevronDown className="w-3 h-3 ml-1" />
+                                <img width={19} src="ind.jpg" alt="" /> Eng <ChevronDown className="w-3 h-3 ml-1" />
                             </div>
                         </div>
                     </div>

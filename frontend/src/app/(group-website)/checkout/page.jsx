@@ -63,7 +63,7 @@ const Checkout = () => {
           const options = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_id,
             currency: "INR",
-            name: "Apna Market",
+            name: "Shop India",
             description: "Test Transaction",
             order_id: response.data.razorpay_order_id,
             handler: (razorpay_response) => {

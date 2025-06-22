@@ -258,7 +258,11 @@ export default function CartPage() {
             </div>
             <button
               onClick={checkoutHandler}
-              className="bg-blue-600 w-full cursor-pointer py-2 text-white rounded-md hover:bg-blue-700 mt-3 text-sm font-semibold"
+              disabled={cart.items.length === 0}
+              className={`w-full cursor-pointer py-2 text-white rounded-md mt-3 text-sm font-semibold 
+    ${cart.items.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"}`}
             >
               Proceed to Checkout
             </button>

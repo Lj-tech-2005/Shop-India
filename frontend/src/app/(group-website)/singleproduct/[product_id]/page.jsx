@@ -6,6 +6,8 @@ import { getproduct } from '@/app/library/api-call';
 import { FaHeart, FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
 import { PiMinus, PiPlus } from 'react-icons/pi';
 import AddToCart from '@/components/website/AddToCart';
+import Buynow from '@/components/website/Buynow';
+import WishlistButton from '@/components/website/WishlistButton';
 
 export default function SingalProduct({ params }) {
   const productId = params?.product_id;
@@ -59,8 +61,8 @@ export default function SingalProduct({ params }) {
             <Image
               src={mainImage}
               alt={product.name}
-              width={400}
-              height={400}
+              width={300}
+              height={100}
               className="object-contain rounded-lg"
             />
             <div className="flex gap-3 overflow-x-auto mt-4 pb-2">
@@ -138,10 +140,11 @@ export default function SingalProduct({ params }) {
               <p className="text-green-600 text-sm">{product.stock ? "In Stock" : "Out of Stock"}</p>
 
               <AddToCart product={product} />
-              <button className="w-full bg-yellow-400 text-black py-2 rounded hover:bg-yellow-500">BUY WITH PayPal</button>
-
+              {/* <button className="w-full bg-yellow-400 text-black py-2 rounded hover:bg-yellow-500">BUY WITH PayPal</button> */}
+              <Buynow product={product}/>
               <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                <p><FaHeart className="inline mr-1" /> Wishlist</p>
+                {/* <p><FaHeart className="inline mr-1" /> Wishlist</p> */}
+                <WishlistButton productId={product._id}/>
                 <p><FaBalanceScale className="inline mr-1" /> Compare</p>
               </div>
 

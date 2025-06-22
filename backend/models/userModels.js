@@ -60,6 +60,12 @@ const userSchema = new mongoose.Schema(
       type: [ShippingAddressSchema],
       default: [],
     },
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
+      },
+    ],
   },
   {
     timestamps: true, // adds createdAt and updatedAt

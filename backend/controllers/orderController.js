@@ -230,7 +230,71 @@ const orderController = {
       return res.send({ message: "Internal server error", flag: 0 });
     }
   },
-  
+
+    async buyNow(req, res) {
+    try {
+      const { user_id, order_total, payment_mode, shipping_details, product } = req.body;
+
+      if (!product || !product.product_id || !product.qty || !product.price) {
+        return res.send({ message: "Product info missing", flag: 0 });
+      }
+
+      const product_details = [{
+        product_id: product.product_id,
+        qty: product.qty,
+        price: product.price,
+        total: product.qty * product.price
+      }];
+
+      const order = new OrderModel({
+        user_id,
+        product_details,
+        order_total,
+        payment_mode,
+        shipping_details
+      });
+
+      await order.save();
+
+      // 🧾 COD
+      if (payment_mode == 0) {
+        return res.send({
+          message: "Order placed successfully",
+          order_id: order._id,
+          flag: 1
+        });
+      }
+
+      // 💳 Razorpay Payment
+      razorpay_instance.orders.create(
+        {
+          receipt: order._id.toString(),
+          amount: Number(order_total) * 100,
+          currency: "INR"
+        },
+        async (error, razorpay_order) => {
+          if (error) {
+            console.error("Razorpay error:", error);
+            return res.send({ message: "Unable to initiate payment", flag: 0 });
+          }
+
+          order.razorpay_order_id = razorpay_order.id;
+          await order.save();
+
+          return res.send({
+            message: "Payment initiated",
+            flag: 1,
+            order_id: order._id,
+            razorpay_order_id: razorpay_order.id,
+            amount: Number(order_total) * 100
+          });
+        }
+      );
+    } catch (err) {
+      console.error("Buy Now Order Error:", err);
+      return res.send({ message: "Internal Server Error", flag: 0 });
+    }
+  }
 
 
 };

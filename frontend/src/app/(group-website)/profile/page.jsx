@@ -20,7 +20,7 @@ export default function Profile() {
   const user = useSelector((state) => state.user.data);
   const token = useSelector((state) => state.user.token);
 
-  console.log(userOrders)
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
