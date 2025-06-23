@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getproduct } from '@/app/library/api-call';
-import { FaHeart, FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
-import { PiMinus, PiPlus } from 'react-icons/pi';
+import {  FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
 import AddToCart from '@/components/website/AddToCart';
 import Buynow from '@/components/website/Buynow';
 import WishlistButton from '@/components/website/WishlistButton';
@@ -13,7 +12,7 @@ export default function SingalProduct({ params }) {
   const productId = params?.product_id;
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
-  const [qty, setQty] = useState(1);
+  // const [qty, setQty] = useState(1);
 
   // ✅ Step 1: Function to convert plain text to HTML
   const convertToHTML = (text) => {

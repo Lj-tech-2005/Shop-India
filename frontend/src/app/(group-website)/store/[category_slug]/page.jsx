@@ -1,5 +1,5 @@
 import { getproduct } from '@/app/library/api-call';
-import AddToCart from '@/components/website/addToCart';
+import AddToCart from '@/components/website/AddToCart';
 import Pagination from '@/components/website/Pagination';
 import Link from 'next/link';
 
