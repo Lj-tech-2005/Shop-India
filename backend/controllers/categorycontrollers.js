@@ -1,7 +1,6 @@
 const { genrateUniqueName } = require("../helper");
 const categorymodel = require("../models/categorymodels");
 const productmodel = require("../models/productmodels ");
-const { param } = require("../routers/categoryrouters");
 const fs = require("fs")
 
 
