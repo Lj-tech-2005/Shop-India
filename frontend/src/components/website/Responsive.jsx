@@ -19,7 +19,7 @@ export default function Responsive() {
         fetchProducts();
     }, []);
 
-    const productslice = products.slice(0, 29)
+    const productslice = Array.isArray(products) ? products.slice(0, 29) : [];
     const settings = {
         dots: true,             // Optional: hide bottom dots too
         arrows: false,           // ✅ hides left/right arrow buttons

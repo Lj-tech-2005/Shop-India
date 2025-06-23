@@ -11,7 +11,8 @@ export default async function layout({ children }) {
     const categoryJSON = await getCategory();
     const catdata = categoryJSON?.categorys;
 
-    const popcat = catdata.slice(0,12)
+    const popcat = Array.isArray(catdata) ? catdata.slice(0, 12) : [];
+
 
     return (
         <section className='bg-[#E2E4EB]'>

@@ -20,7 +20,8 @@ export default function Responsivetwo() {
         fetchProducts();
     }, []);
 
-    const productslice = products.slice(29, 41);
+  const productslice = Array.isArray(products) ? products.slice(29, 41) : [];
+
 
     const settings = {
         dots: true,             // Optional: hide bottom dots too

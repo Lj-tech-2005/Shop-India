@@ -17,16 +17,14 @@ export default async function page() {
   const branddata = brandJSON?.brands;
 
 
-  const topbrand = branddata?.slice(0, 10)
-
-
-  const topcat = catdata?.slice(8, 13);
-  const topfour = catdata?.slice(8, 12);
-  const smartphonecat = catdata?.slice(13, 19);
-  const laptopcat = catdata?.slice(19, 25);
-  const Audioscat = catdata?.slice(25, 29);
-  const gamingcat = catdata?.slice(29, 33);
-  const officecat = catdata?.slice(33, 37);
+  const topbrand = Array.isArray(branddata) ? branddata.slice(0, 10) : [];
+const topcat = Array.isArray(catdata) ? catdata.slice(8, 13) : [];
+const topfour = Array.isArray(catdata) ? catdata.slice(8, 12) : [];
+const smartphonecat = Array.isArray(catdata) ? catdata.slice(13, 19) : [];
+const laptopcat = Array.isArray(catdata) ? catdata.slice(19, 25) : [];
+const Audioscat = Array.isArray(catdata) ? catdata.slice(25, 29) : [];
+const gamingcat = Array.isArray(catdata) ? catdata.slice(29, 33) : [];
+const officecat = Array.isArray(catdata) ? catdata.slice(33, 37) : [];
 
 
 

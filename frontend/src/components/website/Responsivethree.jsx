@@ -19,8 +19,8 @@ export default function Responsivethree() {
 
         fetchProducts();
     }, []);
+    const productslice = Array.isArray(products) ? products.slice(41, 53) : [];
 
-    const productslice = products.slice(41, 53);
 
     const settings = {
         dots: true,             // Optional: hide bottom dots too
