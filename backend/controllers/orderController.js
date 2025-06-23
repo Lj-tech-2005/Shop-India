@@ -231,7 +231,7 @@ const orderController = {
     }
   },
 
-    async buyNow(req, res) {
+  async buyNow(req, res) {
     try {
       const { user_id, order_total, payment_mode, shipping_details, product } = req.body;
 
@@ -294,7 +294,35 @@ const orderController = {
       console.error("Buy Now Order Error:", err);
       return res.send({ message: "Internal Server Error", flag: 0 });
     }
+  },
+
+  async getAllOrders(req, res) {
+    try {
+      const orders = await orderModel
+        .find()
+        .sort({ createdAt: -1 })
+        .populate("product_details.product_id", "name thumbnail")
+        .populate("user_id", "name"); // 👈 Add this line to populate user name
+
+      if (!orders.length) {
+        return res.send({ message: "No orders found", flag: 0 });
+      }
+
+      // Optionally map user name into root for frontend simplicity
+      const formattedOrders = orders.map(order => ({
+        ...order._doc,
+        user_name: order.user_id?.name || 'N/A', // 👈 safe fallback
+        user_id: order.user_id?._id || order.user_id, // keep _id in case
+      }));
+
+      res.send({ message: "Orders fetched successfully", flag: 1, orders: formattedOrders });
+    } catch (error) {
+      console.error("getAllOrders error:", error);
+      res.send({ message: "Internal server error", flag: 0 });
+    }
   }
+
+
 
 
 };

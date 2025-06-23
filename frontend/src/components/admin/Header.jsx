@@ -60,21 +60,6 @@ export default function Header() {
       {/* Right section */}
       <div className="flex items-center gap-6 text-base">
         {/* Icons */}
-        <div className="relative group cursor-pointer">
-          <FaEnvelope className="hover:text-orange-400 transition duration-300" />
-          <span className="absolute -top-2 -right-3 bg-orange-500 text-white text-xs font-semibold rounded-full px-1.5">
-            16
-          </span>
-        </div>
-
-        <div className="relative group cursor-pointer">
-          <FaBell className="hover:text-teal-400 transition duration-300" />
-          <span className="absolute -top-2 -right-3 bg-teal-500 text-white text-xs font-semibold rounded-full px-1.5">
-            8
-          </span>
-        </div>
-
-        <FaCog className="cursor-pointer hover:text-blue-400 transition duration-300" />
 
         {/* Logout */}
         <div

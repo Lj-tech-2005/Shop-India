@@ -13,9 +13,10 @@ const CartRouter = require('./routers/cartRouter');
 const brandRouter = require('./routers/brandeouter');
 const orderRouter = require('./routers/orderRouters');
 const wishlistRoutes = require('./routers/wishlistrouters')
+const usercontactrouters = require('./routers/usercontactrouters')
 
 
-    server.use(express.json());
+server.use(express.json());
 server.use(cookieParser())
 server.use(cors({ origin: "http://localhost:3000", credentials: true }));
 server.use("/category", categoryrouter)
@@ -28,6 +29,7 @@ server.use("/cart", CartRouter);
 server.use("/brand", brandRouter);
 server.use("/order", orderRouter);
 server.use("/wishlist", wishlistRoutes);
+server.use("/contact", usercontactrouters);
 
 
 

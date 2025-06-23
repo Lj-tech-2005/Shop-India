@@ -154,46 +154,44 @@ export default function AboutPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
                             {/* Cards remain unchanged, only company context is Indian */}
                             {/* Add or replace members if needed */}
-                            <div className="rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/ab1.png" alt="Henry Avery" width={300} height={400} className="w-full h-[300px] object-cover" />
+                            <div className="rounded-xl cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                                <Image src="/d1.webp" alt="Bahgirath-Giri" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
-                                    <h2 className="font-semibold text-lg">Henry Avery</h2>
+                                    <h2 className="font-semibold text-lg">Bahgirath-Giri</h2>
                                     <p className="text-gray-500 text-sm mt-1">CHAIRMAN</p>
                                 </div>
                             </div>
-                            <div className="rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/ab2.png" alt="Michael Edward" width={300} height={400} className="w-full h-[300px] object-cover" />
+                            <div className="rounded-xl  cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                                <Image src="/d2.jpg" alt="Virendra Singh" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
-                                    <h2 className="font-semibold text-lg">Michael Edward</h2>
+                                    <h2 className="font-semibold text-lg">Virendra Singh</h2>
                                     <p className="text-gray-500 text-sm mt-1">VICE PRESIDENT</p>
                                 </div>
                             </div>
-                            <div className="rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/ab3.png" alt="Eden Hazard" width={300} height={400} className="w-full h-[300px] object-cover" />
+                            <div className="rounded-xl  cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                                <Image src="/d3.jfif" alt="Mahaveer Kumawat" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
-                                    <h2 className="font-semibold text-lg">Eden Hazard</h2>
+                                    <h2 className="font-semibold text-lg">Mahaveer Kumawat</h2>
                                     <p className="text-gray-500 text-sm mt-1">CEO</p>
                                 </div>
                             </div>
-                            <div className="rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/ab4.png" alt="Robert Downey Jr" width={300} height={400} className="w-full h-[300px] object-cover" />
+                            <div className="rounded-xl  cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                                <Image src="/d4.jpg" alt="Nikhil Khandelwal" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
-                                    <h2 className="font-semibold text-lg">Robert Downey Jr</h2>
+                                    <h2 className="font-semibold text-lg">Nikhil Khandelwal</h2>
                                     <p className="text-gray-500 text-sm mt-1">CEO</p>
                                 </div>
                             </div>
-                            <div className="rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/ab5.png" alt="Nathan Drake" width={300} height={400} className="w-full h-[300px] object-cover" />
+                            <div className="rounded-xl  cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                                <Image src="/d5.jpg" alt="Lokesh jangir" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
-                                    <h2 className="font-semibold text-lg">Nathan Drake</h2>
+                                    <h2 className="font-semibold text-lg">Lokesh jangir</h2>
                                     <p className="text-gray-500 text-sm mt-1">STRATEGIST DIRECTOR</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="text-right mt-3">
-                        <a href="#" className="text-sm text-blue-500 hover:underline">View All</a>
-                    </div>
+                  
                 </section>
             </div>
 

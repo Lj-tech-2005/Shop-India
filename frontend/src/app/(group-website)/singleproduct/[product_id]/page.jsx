@@ -107,7 +107,7 @@ export default function SingalProduct({ params }) {
                     <div key={index} className="flex items-center gap-1 border px-2 py-1 rounded text-xs">
                       <span
                         className="inline-block w-4 h-4 rounded-full"
-                        style={{ backgroundColor: color.code || '#000' }}
+                        style={{ backgroundColor: color.Hexcode || '#000' }}
                       ></span>
                       <span>{color.name}</span>
                     </div>

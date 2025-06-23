@@ -22,6 +22,7 @@ export default function OrdersPage() {
     }
   }, [user]);
 
+
   const fetchUserOrders = async () => {
     try {
       const response = await getUserOrders(user._id);
