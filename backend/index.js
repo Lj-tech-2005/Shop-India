@@ -32,6 +32,9 @@ server.use("/wishlist", wishlistRoutes);
 server.use("/contact", usercontactrouters);
 
 
+server.get("/api/test", (req, res) => {
+    res.json({ message: "API is working!" });
+});
 
 
 mongoose.connect(process.env.MONGODB_URL, { dbName: "Shop-india" }).then(

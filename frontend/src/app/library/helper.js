@@ -4,8 +4,8 @@ import axios from "axios";
 
 
 const axiosApiInstance = axios.create({
-
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    withCredentials: true, // required for cookie-based auth
 });
 
 
@@ -29,4 +29,4 @@ function getCookies(name) {
 }
 
 
-export { createSlug, notify, axiosApiInstance,getCookies }
+export { createSlug, notify, axiosApiInstance, getCookies }
