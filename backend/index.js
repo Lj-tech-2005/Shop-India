@@ -18,7 +18,7 @@ const usercontactrouters = require('./routers/usercontactrouters')
 
 server.use(express.json());
 server.use(cookieParser())
-server.use(cors({ origin: "http://localhost:3000", credentials: true }));
+server.use(cors({ origin: "https://shop-india-9usnbjenu-lokesh-jangids-projects.vercel.app", credentials: true }));
 server.use("/category", categoryrouter)
 server.use("/color", colorrouter)
 server.use("/product", productrouter)
