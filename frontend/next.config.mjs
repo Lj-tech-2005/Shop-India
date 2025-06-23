@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
-    images: {
-        domains: ['localhost', 'your-production-domain.com'],
-    }
+  images: {
+    domains: ['shop-india.onrender.com'],
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

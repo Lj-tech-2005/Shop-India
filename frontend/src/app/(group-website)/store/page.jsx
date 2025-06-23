@@ -10,8 +10,8 @@ const ProductCard = async ({ searchParams }) => {
 
     const response = await getproduct(null, null, searchParams?.brand, searchParams?.color, limit, searchParams?.minPrice, searchParams?.maxPrice, page);
     const products = response?.products || [];
-
-
+    console.log(response)
+    console.log(products)
     return (
         <div className="max-w-[1360px] p-4">
             {products.length === 0 ? (
@@ -43,7 +43,7 @@ const ProductCard = async ({ searchParams }) => {
 
                             {/* Product Info */}
                             <div className="flex flex-col flex-grow mt-4">
-                                <Link key={index}  href={`/singleproduct/${product?._id}`}>
+                                <Link key={index} href={`/singleproduct/${product?._id}`}>
                                     <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-tight cursor-pointer">
                                         {product.name}
                                     </h3>
