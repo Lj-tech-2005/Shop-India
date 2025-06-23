@@ -3,7 +3,7 @@ import '../globals.css';
 import SideMenu from "@/components/admin/SideMenu";
 import Header from "@/components/admin/Header";
 import { ToastContainer, toast } from 'react-toastify';
-import Storeprovider from "@/components/storeprovider";
+import Storeprovider from "@/components/Storeprovider";
 
 
 
