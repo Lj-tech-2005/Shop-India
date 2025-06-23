@@ -126,18 +126,28 @@ export default function Header() {
                     </div>
 
                     {/* Profile + Cart */}
-                    <div className="flex gap-5 items-center relative">
-                        {/* Profile Icon + Hover Menu */}
-                        {/* Profile Icon + Hover Dropdown */}
-                        <div
-                            className="relative group"
-                        >
+                    {/* Profile + Cart */}
+                    <div className="w-full md:w-auto flex justify-between md:justify-start gap-5 items-center relative">
+
+                        {/* Cart Icon (left on mobile) */}
+                        <Link href="/cart">
+                            <div className="relative flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
+                                <div className="bg-[#EBEEF6] text-2xl w-[40px] h-[40px] rounded-full flex justify-center items-center relative">
+                                    <MdShoppingCart />
+                                    <span className="absolute bottom-[-6px] right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
+                                        {cart?.items?.length ?? 0}
+                                    </span>
+                                </div>
+                                <p className="text-[#666666] text-xs mt-1 font-semibold">Cart</p>
+                            </div>
+                        </Link>
+
+                        {/* Profile Icon (right on mobile) */}
+                        <div className="relative group">
                             <div className="flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
                                 <FaUserCircle />
                                 <span className="text-xs mt-1 text-gray-700 font-semibold">Profile</span>
                             </div>
-
-                            {/* Dropdown menu shown on hover of parent .group */}
                             <div className="absolute right-0 top-[40px] bg-white border border-gray-200 shadow-md rounded-md w-52 z-50 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 {user.data ? (
                                     <>
@@ -169,21 +179,9 @@ export default function Header() {
                                 )}
                             </div>
                         </div>
-
-
-                        {/* Cart Icon */}
-                        <Link href="/cart">
-                            <div className="relative flex items-center gap-2 cursor-pointer">
-                                <div className="bg-[#EBEEF6] text-2xl w-[40px] h-[40px] rounded-full flex justify-center items-center relative">
-                                    <MdShoppingCart />
-                                    <span className="absolute bottom-[-6px] right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
-                                        {cart?.items?.length ?? 0}
-                                    </span>
-                                </div>
-                                <p className="text-[#666666] text-xs uppercase">cart</p>
-                            </div>
-                        </Link>
                     </div>
+
+
                 </nav>
             </div>
 

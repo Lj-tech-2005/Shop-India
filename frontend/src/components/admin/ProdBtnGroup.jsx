@@ -136,7 +136,7 @@ const ProductDetail = ({ product, onClose }) => {
     <div className="fixed inset-0 z-50 bg-white overflow-y-auto px-4">
       <button
         onClick={onClose}
-        className="fixed top-4 right-4 text-gray-600 hover:text-red-500 z-10"
+        className="fixed top-4 right-4 cursor-pointer text-gray-600 hover:text-red-500 z-10"
       >
         <FaTimesCircle className="w-6 h-6" />
       </button>

@@ -17,16 +17,17 @@ export default async function page() {
   const branddata = brandJSON?.brands;
 
 
-  const topbrand = branddata.slice(0, 10)
+  const topbrand = branddata?.slice(0, 10)
 
 
-  const topcat = catdata.slice(8, 13);
-  const topfour = catdata.slice(8, 12);
-  const smartphonecat = catdata.slice(13, 19);
-  const laptopcat = catdata.slice(19, 25);
-  const Audioscat = catdata.slice(25, 29);
-  const gamingcat = catdata.slice(29, 33);
-  const officecat = catdata.slice(33, 37);
+  const topcat = catdata?.slice(8, 13);
+  const topfour = catdata?.slice(8, 12);
+  const smartphonecat = catdata?.slice(13, 19);
+  const laptopcat = catdata?.slice(19, 25);
+  const Audioscat = catdata?.slice(25, 29);
+  const gamingcat = catdata?.slice(29, 33);
+  const officecat = catdata?.slice(33, 37);
+
 
 
 
@@ -105,7 +106,7 @@ export default async function page() {
             </Link>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
-            {topbrand.map((brand, index) => (
+            {topbrand?.map((brand, index) => (
               <Link key={index} href={"/store"}>
                 <div key={index} className="flex cursor-pointer items-center justify-center p-2 hover:scale-105 transition-transform">
                   <Image
@@ -131,7 +132,7 @@ export default async function page() {
             </Link>
           </div>
           <div className="grid grid-cols-2 mt-10 sm:grid-cols-4 gap-4">
-            {topfour.map((cat, index) => (
+            {topfour?.map((cat, index) => (
               <Link
                 key={index}
                 href={`/store/${cat.slug}`}
@@ -200,7 +201,7 @@ export default async function page() {
 
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-19">
-              {smartphonecat.map((cat, index) => (
+              {smartphonecat?.map((cat, index) => (
                 <Link
                   key={index}
                   href={`/store/${cat.slug}`}
@@ -265,7 +266,7 @@ export default async function page() {
           {/* Right: Top Categories */}
           <div className="bg-white h-[225px] rounded-xl p-5 flex flex-col justify-between">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-19">
-              {laptopcat.map((cat, index) => (
+              {laptopcat?.map((cat, index) => (
                 <Link
                   key={index}
                   href={`/store/${cat.slug}`}
@@ -317,7 +318,7 @@ export default async function page() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            {Audioscat.map((cat, index) => (
+            {Audioscat?.map((cat, index) => (
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image
@@ -358,7 +359,7 @@ export default async function page() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            {gamingcat.map((cat, index) => (
+            {gamingcat?.map((cat, index) => (
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image
@@ -394,7 +395,7 @@ export default async function page() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            {officecat.map((cat, index) => (
+            {officecat?.map((cat, index) => (
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image

@@ -204,7 +204,7 @@ function RegisterForm() {
                         className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-teal-500 focus:outline-none"
                     />
                 </div>
-                <span className='text-red-500'>{error}</span>
+               
                 {/* <div>
                     <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
                     <input
@@ -220,6 +220,7 @@ function RegisterForm() {
                 >
                     REGISTER
                 </button>
+                 <span className='text-red-500 ms-5'>{error}</span>
             </form>
         </>
     );
