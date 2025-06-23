@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 import { use, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { axiosApiInstance, createSlug, notify } from '@/app/library/helper';
