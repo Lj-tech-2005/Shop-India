@@ -1,8 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import Storeprovider from "@/components/Storeprovider";
-import Header from "@/components/website/Header";
-import Footer from "@/components/website/Footer";
 import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
@@ -30,9 +28,9 @@ export default function RootLayout({ children }) {
                     <ToastContainer
                         autoClose={1200}
                     />
-                    <Header />
+                 
                     {children}
-                    <Footer />
+                  
                 </Storeprovider>
             </body>
         </html>
