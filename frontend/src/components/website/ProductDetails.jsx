@@ -37,7 +37,7 @@ export default function TopProductSection() {
                 <div className="flex  flex-col items-center gap-10 mt-2">
                     <div className="relative w-full h-[300px] rounded-lg  overflow-hidden">
                         <Image
-                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${mainImage}`}
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${mainImage}`}
                             alt="Main Product"
                             fill
                             className="object-contain"
@@ -56,7 +56,7 @@ export default function TopProductSection() {
                                 onMouseEnter={() => setMainImage(img)}
                             >
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${img}`}
+                                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${img}`}
                                     alt={`Thumbnail ${idx + 1}`}
                                     width={48}
                                     height={56}

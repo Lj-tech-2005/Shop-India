@@ -17,8 +17,28 @@ const usercontactrouters = require('./routers/usercontactrouters')
 
 
 server.use(express.json());
-server.use(cookieParser())
-server.use(cors({ origin: "https://shop-india-one.vercel.app", credentials: true }));
+server.use(cookieParser());
+
+const allowedOrigins = [
+    "http://localhost:3000", // Local dev
+    "https://shop-india-one.vercel.app" // Deployed frontend
+];
+
+server.use(
+    cors({
+        origin: function (origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
+    })
+);
+
+
+
 server.use("/category", categoryrouter)
 server.use("/color", colorrouter)
 server.use("/product", productrouter)

@@ -43,7 +43,7 @@ export default async function page() {
                 >
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                       alt={cat.name}
                       width={30}
                       height={30}
@@ -108,7 +108,7 @@ export default async function page() {
               <Link key={index} href={"/store"}>
                 <div key={index} className="flex cursor-pointer items-center justify-center p-2 hover:scale-105 transition-transform">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/brand/${brand.brandImage}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/brand/${brand.brandImage}`}
                     alt={brand.name}
                     width={70}
                     height={40}
@@ -137,7 +137,7 @@ export default async function page() {
                 className="flex flex-col items-center text-center hover:text-blue-600 transition-colors"
               >
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                   alt={cat.name}
                   width={60}
                   height={60}
@@ -211,7 +211,7 @@ export default async function page() {
                   </div>
                   <div>
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                       alt={cat.name}
                       width={50}
                       height={50}
@@ -276,7 +276,7 @@ export default async function page() {
                   </div>
                   <div>
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                       alt={cat.name}
                       width={50}
                       height={50}
@@ -320,7 +320,7 @@ export default async function page() {
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                     alt={cat.name}
                     width={40}
                     height={40}
@@ -361,7 +361,7 @@ export default async function page() {
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                     alt={cat.name}
                     width={40}
                     height={40}
@@ -397,7 +397,7 @@ export default async function page() {
               <Link key={index} href={`/store/${cat.slug}`} className="group">
                 <div className="bg-white border border-gray-200 group-hover:border-blue-500 rounded-full w-20 h-20 mx-auto flex items-center justify-center shadow-sm transition-all">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                     alt={cat.name}
                     width={40}
                     height={40}

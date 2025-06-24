@@ -72,7 +72,7 @@ export default async function layout({ children }) {
                                 <Link href={`/store/${cat?.slug}`}>
                                     <div className="w-16 h-16 relative">
                                         <img
-                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.categoryImage}`}
+                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
                                             alt={cat.name}
 
                                             className="object-contain"
