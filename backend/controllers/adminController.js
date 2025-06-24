@@ -18,10 +18,10 @@ const adminController = {
         var token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
         res.cookie("admin_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // ✅ true on Render
-          sameSite: "none", // ✅ REQUIRED for cross-origin cookies
-          path: "/",
-          maxAge: 24 * 60 * 60 * 1000,
+          secure: process.env.NODE_ENV === "production", // ✅ true in production
+          sameSite: "none",
+          path: "/", // ✅ IMPORTANT so it's visible on /admin
+          maxAge: 24 * 60 * 60 * 1000
         });
         res.send({ msg: "login successfully", flag: 1, admin: { ...admin.toJSON(), password: "", token } });
 

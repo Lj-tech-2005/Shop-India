@@ -72,7 +72,7 @@ export default function SingalProduct({ params }) {
                   alt={`thumb-${i}`}
                   className={`h-20 w-20 object-cover rounded-lg border cursor-pointer ${mainImage.includes(img) ? 'ring-2 ring-teal-500' : ''}`}
                   onClick={() =>
-                    setMainImage(`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${img}`)
+                    setMainImage(`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${img}`)
                   }
                 />
               ))}
@@ -161,7 +161,7 @@ export default function SingalProduct({ params }) {
             </div>
 
             <div className="flex gap-4 mt-4 text-sm items-center">
-              <img src="/symbol.png" alt="symbol" />
+              <img src="/Symbol.png" alt="symbol" />
               <p className="text-xs text-black">Ships from <strong>India</strong></p>
             </div>
           </div>

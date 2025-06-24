@@ -132,52 +132,62 @@ export default function Header() {
                         {/* Cart Icon (left on mobile) */}
                         <Link href="/cart">
                             <div className="relative flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
-                                <div className="bg-[#EBEEF6] text-2xl w-[40px] h-[40px] rounded-full flex justify-center items-center relative">
+                                <div className="bg-[#EBEEF6] text-2xl w-[40px] ms-3 h-[40px] rounded-full flex justify-center items-center relative">
                                     <MdShoppingCart />
-                                    <span className="absolute bottom-[-6px] right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
+                                    <span className="absolute bottom-[-6px]  right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
                                         {cart?.items?.length ?? 0}
                                     </span>
                                 </div>
-                                <p className="text-[#666666] text-xs mt-1 font-semibold">Cart</p>
+                                <p className="text-[#666666] ms-3 text-xs mt-1 font-semibold">Cart</p>
                             </div>
                         </Link>
 
                         {/* Profile Icon (right on mobile) */}
-                        <div className="relative group">
-                            <div className="flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
+                        <div className="relative">
+                            <div
+                                className="flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl"
+                                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                            >
                                 <FaUserCircle />
                                 <span className="text-xs mt-1 text-gray-700 font-semibold">Profile</span>
                             </div>
-                            <div className="absolute right-0 top-[40px] bg-white border border-gray-200 shadow-md rounded-md w-52 z-50 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                {user.data ? (
-                                    <>
-                                        <div className="px-4 py-2 text-xs text-gray-600">
-                                            Hello, <span className="font-semibold">{user.data.name}</span>
-                                        </div>
-                                        <Link href="/profile">
-                                            <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">👤 My Profile</div>
+
+                            {showProfileDropdown && (
+                                <div className="absolute right-0 top-[40px] bg-white border border-gray-200 shadow-md rounded-md w-52 z-50 p-2">
+                                    {user.data ? (
+                                        <>
+                                            <div className="px-4 py-2 text-xs text-gray-600">
+                                                Hello, <span className="font-semibold">{user.data.name}</span>
+                                            </div>
+                                            <Link href="/profile">
+                                                <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">👤 My Profile</div>
+                                            </Link>
+                                            <div
+                                                onClick={logoutHandler}
+                                                className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
+                                            >
+                                                🔓 Logout
+                                            </div>
+                                            <Link href="/wishlist">
+                                                <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">
+                                                    <FaRegHeart className="text-red-400" /> My Wishlist
+                                                </div>
+                                            </Link>
+                                            <Link href="/myorder">
+                                                <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">
+                                                    <MdOutlineBookmarkBorder /> My Orders
+                                                </div>
+                                            </Link>
+                                        </>
+                                    ) : (
+                                        <Link href="/login?ref=header">
+                                            <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">
+                                                🔐 Login / Register
+                                            </div>
                                         </Link>
-                                        <div
-                                            onClick={logoutHandler}
-                                            className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
-                                        >
-                                            🔓 Logout
-                                        </div>
-                                        <Link href="/wishlist">
-                                            <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"><FaRegHeart className='text-red-400' />My Wishlist</div>
-                                        </Link>
-                                        <Link href="/myorder">
-                                            <div className="px-4 py-2 flex items-center gap-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"><MdOutlineBookmarkBorder />My Orders</div>
-                                        </Link>
-                                    </>
-                                ) : (
-                                    <Link href="/login?ref=header">
-                                        <div className="px-4 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer">
-                                            🔐 Login / Register
-                                        </div>
-                                    </Link>
-                                )}
-                            </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
 

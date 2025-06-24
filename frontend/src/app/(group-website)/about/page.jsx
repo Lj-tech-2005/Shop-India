@@ -169,7 +169,7 @@ export default function AboutPage() {
                                 </div>
                             </div>
                             <div className="rounded-xl  cursor-pointer overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                                <Image src="/d3.jfif" alt="Mahaveer Kumawat" width={300} height={400} className="w-full h-[300px] object-cover" />
+                                <Image src="/mahaveer.jpg" alt="Mahaveer Kumawat" width={300} height={400} className="w-full h-[300px] object-cover" />
                                 <div className="p-4">
                                     <h2 className="font-semibold text-lg">Mahaveer Kumawat</h2>
                                     <p className="text-gray-500 text-sm mt-1">CEO</p>
