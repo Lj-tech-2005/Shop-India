@@ -17,11 +17,11 @@ const adminController = {
       if (password === admin.password) {
         var token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
         res.cookie("admin_token", token, {
-          httpOnly: true, // ✅ must be true for security & middleware
-          secure: process.env.NODE_ENV === "production", // true in prod, false in dev
-          sameSite: "lax", // ✅ case-sensitive
-          path: "/",       // ✅ required so all routes can read
-          maxAge: 24 * 60 * 60 * 1000, // 1 day
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // ✅ true on Render
+          sameSite: "none", // ✅ REQUIRED for cross-origin cookies
+          path: "/",
+          maxAge: 24 * 60 * 60 * 1000,
         });
         res.send({ msg: "login successfully", flag: 1, admin: { ...admin.toJSON(), password: "", token } });
 

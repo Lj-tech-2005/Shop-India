@@ -161,20 +161,17 @@ export default async function page() {
 
       {/* fourth section */}
 
-      <section className='bg-white p-3 rounded-2xl' >
-        <div className='flex justify-between px-4'>
+      <section className="bg-white p-3 rounded-2xl">
+        <div className="flex flex-col sm:flex-row justify-between px-4 gap-2">
           <h2 className="text-lg font-semibold mb-2">TOP CELLPHONES & TABLETS</h2>
-          <div className="">
-            <Link href="/store" className="text-sm text-blue-600 hover:underline">
-              View All
-            </Link>
-          </div>
+          <Link href="/store" className="text-sm text-blue-600 hover:underline self-start sm:self-center">
+            View All
+          </Link>
         </div>
-        <div className="py-4 border-b-2 border-[#99999944] grid grid-cols-1 md:grid-cols-2">
 
-          {/* Left: Featured Product Banner */}
-          <div className="relative h-[225px] rounded-xl overflow-hidden">
-            {/* Background image that covers the entire section */}
+        <div className="py-4 border-b-2 border-[#99999944] grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Left: Banner */}
+          <div className="relative h-[200px] sm:h-[225px] rounded-xl overflow-hidden">
             <Image
               src="/prod18.png"
               alt="Redmi Note 12 Pro+ 5G"
@@ -182,67 +179,61 @@ export default async function page() {
               className="object-cover"
               priority
             />
-
-            {/* Overlay content */}
-            <div className="absolute inset-0 bg-gradient-to-r p-5 flex flex-col justify-center z-10">
-              <h3 className="text-xl font-bold mb-1">REDMI NOTE 12 <br /> PRO+ 5G</h3>
-              <p className="text-sm text-gray-700 mb-3">Rise to the challenge</p>
-              <button className="bg-black text-white px-4 py-2 rounded hover:opacity-80 text-sm w-fit">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent p-5 flex flex-col justify-center z-10 text-white">
+              <h3 className="text-base sm:text-xl font-bold mb-1">REDMI NOTE 12 <br /> PRO+ 5G</h3>
+              <p className="text-xs sm:text-sm text-white mb-3">Rise to the challenge</p>
+              <button className="bg-black text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:opacity-80 text-sm w-fit">
                 SHOP NOW
               </button>
             </div>
           </div>
 
-
           {/* Right: Top Categories */}
-          <div className="bg-white h-[225px] rounded-xl p-5 flex flex-col justify-between">
-
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-19">
+          <div className="bg-white h-auto lg:h-[225px] rounded-xl p-4 flex items-center justify-center">
+            <div className="grid grid-cols-3 gap-4 w-full">
               {smartphonecat?.map((cat, index) => (
                 <Link
                   key={index}
                   href={`/store/${cat.slug}`}
-                  className="flex items-center gap-3 hover:text-blue-600 transition-colors"
+                  className="flex flex-col items-center text-center gap-1 hover:text-blue-600 transition-colors"
                 >
-                  <div className="min-w-0">
-                    <h3 className="text-sm font-semibold truncate">{cat.name}</h3>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
+                    alt={cat.name}
+                    width={48}
+                    height={48}
+                    className="object-contain rounded"
+                  />
+                  <div className="truncate w-full">
+                    <h3 className="text-sm font-semibold">{cat.name}</h3>
                     <p className="text-xs text-gray-500">{cat?.productCount} Items</p>
-                  </div>
-                  <div>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
-                      alt={cat.name}
-                      width={50}
-                      height={50}
-                      className="object-contain rounded"
-                    />
                   </div>
                 </Link>
               ))}
             </div>
           </div>
         </div>
+
         <Responsivetwo />
       </section>
+
 
 
       {/* Laptops section */}
 
       <section className="bg-white mt-15 p-3 rounded-2xl">
-        <div className='flex justify-between px-4'>
+        <div className="flex flex-col sm:flex-row sm:justify-between px-4 gap-3">
           <h2 className="text-lg font-semibold mb-2">TOP CELLPHONES & TABLETS</h2>
-          <div className="">
+          <div>
             <Link href="/store" className="text-sm text-blue-600 hover:underline">
               View All
             </Link>
           </div>
         </div>
 
-        <div className="py-4 border-b-2 border-[#99999944] grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="py-4 border-b-2 border-[#99999944] grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Left: Featured Product Banner */}
-          <div className="relative h-[225px] rounded-xl overflow-hidden">
-            {/* Background image that covers the entire section */}
+          <div className="relative h-[200px] sm:h-[225px] rounded-xl overflow-hidden">
             <Image
               src="/laptopbanner.png"
               alt="Redmi Note 12 Pro+ 5G"
@@ -250,38 +241,34 @@ export default async function page() {
               className="object-cover"
               priority
             />
-
-            {/* Overlay content */}
             <div className="absolute text-white inset-0 bg-gradient-to-r from-black/60 to-transparent p-5 flex flex-col justify-center z-10">
-              <h3 className="text-xl font-bold mb-1">Apple MacBook <br /> Air M2 Chip</h3>
-              <p className="text-sm text-white mb-3">Rise to the challenge</p>
-              <button className="bg-black text-white px-4 py-2 rounded hover:opacity-80 text-sm w-fit">
+              <h3 className="text-base sm:text-xl font-bold mb-1">Apple MacBook <br /> Air M2 Chip</h3>
+              <p className="text-xs sm:text-sm text-white mb-3">Rise to the challenge</p>
+              <button className="bg-black text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:opacity-80 text-sm w-fit">
                 SHOP NOW
               </button>
             </div>
           </div>
 
           {/* Right: Top Categories */}
-          <div className="bg-white h-[225px] rounded-xl p-5 flex flex-col justify-between">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-19">
+          <div className="bg-white h-auto lg:h-[225px] rounded-xl p-4 flex flex-col justify-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {laptopcat?.map((cat, index) => (
                 <Link
                   key={index}
                   href={`/store/${cat.slug}`}
-                  className="flex items-center gap-3 hover:text-blue-600 transition-colors"
+                  className="flex flex-col items-center text-center gap-1 hover:text-blue-600 transition-colors"
                 >
-                  <div className="min-w-0">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
+                    alt={cat.name}
+                    width={48}
+                    height={48}
+                    className="object-contain rounded"
+                  />
+                  <div>
                     <h3 className="text-sm font-semibold truncate">{cat.name}</h3>
                     <p className="text-xs text-gray-500">{cat?.productCount} Items</p>
-                  </div>
-                  <div>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/category/${cat.categoryImage}`}
-                      alt={cat.name}
-                      width={50}
-                      height={50}
-                      className="object-contain rounded"
-                    />
                   </div>
                 </Link>
               ))}
@@ -291,6 +278,7 @@ export default async function page() {
 
         <Responsivethree />
       </section>
+
 
       <section className="flex flex-col mt-9 justify-center lg:flex-row gap-6 rounded-xl p-4">
         {/* Section 1 */}

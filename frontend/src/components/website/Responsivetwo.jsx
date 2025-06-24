@@ -24,7 +24,7 @@ export default function Responsivetwo() {
 
 
     const settings = {
-        dots: true,             // Optional: hide bottom dots too
+        dots:false,             // Optional: hide bottom dots too
         arrows: false,           // ✅ hides left/right arrow buttons
         infinite: true,
         autoplay: true,          // ✅ enables automatic sliding
