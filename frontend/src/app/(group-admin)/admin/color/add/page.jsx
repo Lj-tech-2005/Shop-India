@@ -29,7 +29,7 @@ const AddColor = () => {
             Hexcode:Hexref.current.value
         }
 
-        axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + "color/create", data).then(
+        axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + "/color/create", data).then(
 
 
             (res) => {
@@ -92,7 +92,7 @@ const AddColor = () => {
                             onChange={changehandler}
                             name="name"
                             type="text"
-                            placeholder="Enter category name"
+                            placeholder="Enter color name"
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -107,7 +107,7 @@ const AddColor = () => {
                             name="name"
                             readOnly
                             type="text"
-                            placeholder="Enter category slug"
+                            placeholder="Enter color slug"
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -121,7 +121,7 @@ const AddColor = () => {
                             ref={Hexref}
                             name="name"
                             type="color"
-                            placeholder="Enter category slug"
+                            placeholder="Enter color slug"
                             className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>

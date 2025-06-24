@@ -3,41 +3,42 @@ var jwt = require('jsonwebtoken');
 const orderModel = require("../models/orderModels");
 const adminController = {
 
-    async login(req, res) {
+  async login(req, res) {
 
-        const { email, password } = req.body
+    const { email, password } = req.body
 
-        try {
-            const admin = await adminmodel.findOne({ email: email });
-            if (!admin) {
-                res.send({ msg: "admin is not exist", flag: 1 });
+    try {
+      const admin = await adminmodel.findOne({ email: email });
+      if (!admin) {
+        res.send({ msg: "admin is not exist", flag: 1 });
 
-            }
+      }
 
-            if (password === admin.password) {
-                var token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
-                res.cookie('admin_token', token, {
-                    httpOnly: false,         // Prevents JavaScript access (recommended for security)
-                    secure: true,           // Send only over HTTPS
-                    maxAge: 24 * 60 * 60 * 1000, // 1 day
-                    samesite: 'lax',        // Helps prevent CSRF
-                });
-                res.send({ msg: "login successfully", flag: 1, admin: { ...admin.toJSON(), password: "", token } });
+      if (password === admin.password) {
+        var token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+        res.cookie("admin_token", token, {
+          httpOnly: true, // ✅ must be true for security & middleware
+          secure: process.env.NODE_ENV === "production", // true in prod, false in dev
+          sameSite: "lax", // ✅ case-sensitive
+          path: "/",       // ✅ required so all routes can read
+          maxAge: 24 * 60 * 60 * 1000, // 1 day
+        });
+        res.send({ msg: "login successfully", flag: 1, admin: { ...admin.toJSON(), password: "", token } });
 
-            } else {
+      } else {
 
-                res.send({ msg: "incorrect password", flag: 0 });
+        res.send({ msg: "incorrect password", flag: 0 });
 
-            }
+      }
 
-        } catch (error) {
+    } catch (error) {
 
-            res.status(500).send({ msg: 'Internal Server Error', flag: 0 });
+      res.status(500).send({ msg: 'Internal Server Error', flag: 0 });
 
-        }
+    }
 
-    },
-     async getProductSalesStats(req, res) {
+  },
+  async getProductSalesStats(req, res) {
     try {
       const orders = await orderModel.find({ order_status: { $in: [1, 2, 3, 4, 5] } }).populate("product_details.product_id", "name");
 
@@ -96,39 +97,39 @@ const adminController = {
     }
   },
   async getTopProducts(req, res) {
-  try {
-    const orders = await orderModel.find({ order_status: { $in: [1, 2, 3, 4, 5] } }).populate("product_details.product_id", "name");
+    try {
+      const orders = await orderModel.find({ order_status: { $in: [1, 2, 3, 4, 5] } }).populate("product_details.product_id", "name");
 
-    const productStats = {};
+      const productStats = {};
 
-    orders.forEach(order => {
-      order.product_details.forEach(item => {
-        const id = item.product_id?._id?.toString();
-        if (!id) return;
+      orders.forEach(order => {
+        order.product_details.forEach(item => {
+          const id = item.product_id?._id?.toString();
+          if (!id) return;
 
-        if (!productStats[id]) {
-          productStats[id] = {
-            name: item.product_id.name || "Unknown",
-            qty: 0,
-            revenue: 0,
-          };
-        }
+          if (!productStats[id]) {
+            productStats[id] = {
+              name: item.product_id.name || "Unknown",
+              qty: 0,
+              revenue: 0,
+            };
+          }
 
-        productStats[id].qty += item.qty;
-        productStats[id].revenue += item.total;
+          productStats[id].qty += item.qty;
+          productStats[id].revenue += item.total;
+        });
       });
-    });
 
-    const sorted = Object.values(productStats)
-      .sort((a, b) => b.qty - a.qty)
-      .slice(0, 5); // top 5 only
+      const sorted = Object.values(productStats)
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, 5); // top 5 only
 
-    res.send({ flag: 1, data: sorted });
-  } catch (err) {
-    console.error("Error in getTopProducts:", err);
-    res.status(500).send({ flag: 0, message: "Internal Server Error" });
+      res.send({ flag: 1, data: sorted });
+    } catch (err) {
+      console.error("Error in getTopProducts:", err);
+      res.status(500).send({ flag: 0, message: "Internal Server Error" });
+    }
   }
-}
 
 }
 

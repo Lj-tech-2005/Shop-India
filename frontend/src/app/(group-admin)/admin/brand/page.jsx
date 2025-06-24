@@ -66,7 +66,7 @@ export default function BrandList() {
                     <td className="px-6 py-4 border-b">
                       <img
                         width="50px"
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/brand/${brand.brandImage}`}
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/brand/${brand.brandImage}`}
                         alt="brand"
                       />
                     </td>

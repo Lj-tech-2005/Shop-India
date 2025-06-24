@@ -22,13 +22,14 @@ export default function AdminLogin() {
         }
 
 
-        axiosApiInstance.post("admin/login", data, { withCredentials: true }).then(
+        axiosApiInstance.post("/admin/login", data, { withCredentials: true }).then(
             (res) => {
                 console.log(res)
                 notify(res.data.msg, res.data.flag)
                 if (res.data.flag == 1) {
                     localStorage.setItem("admin", JSON.stringify(res.data.admin))
                     localStorage.setItem("loginAt", new Date());
+                    console.log("✅ Login success, redirecting to /admin...");
                     router.push("/admin")
 
                 }

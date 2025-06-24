@@ -27,7 +27,7 @@ export default function SingalProduct({ params }) {
       const response = await getproduct(productId, null, null, null, 0, null, null, 1, true);
       if (response?.products) {
         setProduct(response.products);
-        setMainImage(`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${response.products.thumbnail}`);
+        setMainImage(`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${response.products.thumbnail}`);
       }
     }
     fetchProduct();
@@ -68,7 +68,7 @@ export default function SingalProduct({ params }) {
               {[product.thumbnail, ...product.images].map((img, i) => (
                 <img
                   key={i}
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${img}`}
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${img}`}
                   alt={`thumb-${i}`}
                   className={`h-20 w-20 object-cover rounded-lg border cursor-pointer ${mainImage.includes(img) ? 'ring-2 ring-teal-500' : ''}`}
                   onClick={() =>

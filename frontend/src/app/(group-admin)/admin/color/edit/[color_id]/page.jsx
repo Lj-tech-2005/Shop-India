@@ -37,7 +37,8 @@ const ColorEdit = ({ params }) => {
             Hexcode: Hexref.current.value
         }
 
-        axiosApiInstance.put(`color/update/${colorid}`, data).then(
+        console.log(data)
+        axiosApiInstance.put(`/color/update/${colorid}`, data).then(
             (res) => {
                 notify(res.data.msg, res.data.flag)
                 if (res.data.flag === 1) {

@@ -79,7 +79,7 @@ export default function ProductImageManager() {
                 {images?.map((img, index) => (
                     <div key={index} className="relative group">
                         <Image
-                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${img}`}
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${img}`}
                             alt={`Product Image ${index}`}
                             width={200}
                             height={150}

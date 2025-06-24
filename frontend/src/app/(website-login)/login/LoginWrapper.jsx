@@ -7,19 +7,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/features/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-function LoginForm() {
+function LoginForm({ cart }) {
   const params = useSearchParams();
   const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = useState();
-  const [cart, setCart] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const lsCart = JSON.parse(localStorage.getItem('cart'));
-      setCart(lsCart ? lsCart.items : null);
-    }
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,12 +64,12 @@ function LoginForm() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold text-teal-600">Welcome Back</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-        <input name="email" type="email" placeholder="Email" required className="w-full px-4 py-2 border rounded" />
-        <input name="password" type="password" placeholder="Password" required className="w-full px-4 py-2 border rounded" />
+      <h2 className="text-3xl font-bold text-teal-600">Welcome Back</h2>
+      <form onSubmit={handleSubmit} className="space-y-5 mt-4">
+        <input name="email" type="email" placeholder="Email" required className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-teal-500" />
+        <input name="password" type="password" placeholder="Password" required className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-teal-500" />
         <span className="text-red-500 text-sm">{error}</span>
-        <button type="submit" className="bg-teal-600 text-white px-6 py-2 rounded">
+        <button type="submit" className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition">
           LOGIN
         </button>
       </form>
@@ -114,13 +106,13 @@ function RegisterForm() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold text-teal-600">Register</h2>
-      <form onSubmit={registerSubmit} className="space-y-4 mt-4">
-        <input name="name" type="text" placeholder="Name" required className="w-full px-4 py-2 border rounded" />
-        <input name="email" type="email" placeholder="Email" required className="w-full px-4 py-2 border rounded" />
-        <input name="password" type="password" placeholder="Password" required className="w-full px-4 py-2 border rounded" />
+      <h2 className="text-3xl font-bold text-teal-600">Create Account</h2>
+      <form onSubmit={registerSubmit} className="space-y-5 mt-4">
+        <input name="name" type="text" placeholder="Your Name" required className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-teal-500" />
+        <input name="email" type="email" placeholder="Email" required className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-teal-500" />
+        <input name="password" type="password" placeholder="Password" required className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-teal-500" />
         <span className="text-red-500 text-sm">{error}</span>
-        <button type="submit" className="bg-teal-600 text-white px-6 py-2 rounded">
+        <button type="submit" className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition">
           REGISTER
         </button>
       </form>
@@ -130,19 +122,48 @@ function RegisterForm() {
 
 export default function LoginWrapper() {
   const [isLogin, setIsLogin] = useState(true);
+  const [cart, setCart] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const lsCart = JSON.parse(localStorage.getItem('cart'));
+      setCart(lsCart ? lsCart.items : null);
+    }
+  }, []);
 
   return (
-    <div className="min-h-screen max-w-4xl mx-auto py-10 px-6">
-      <div className="flex justify-center mb-8 gap-4">
-        <button className={`px-6 py-2 font-semibold ${isLogin ? 'bg-teal-600 text-white' : 'bg-gray-300'}`} onClick={() => setIsLogin(true)}>
-          Login
-        </button>
-        <button className={`px-6 py-2 font-semibold ${!isLogin ? 'bg-teal-600 text-white' : 'bg-gray-300'}`} onClick={() => setIsLogin(false)}>
-          Register
-        </button>
-      </div>
-      <div className="bg-white p-8 shadow rounded-xl">
-        {isLogin ? <LoginForm /> : <RegisterForm />}
+    <div className="min-h-screen max-w-[1360px] mx-auto py-8 px-4">
+      <div className="bg-white p-6 sm:p-10 rounded-[10px]  flex flex-col lg:flex-row items-center gap-10">
+        <div className="w-full lg:w-1/2">
+          <Image
+            src="/login.png"
+            alt="Illustration"
+            width={300}
+            height={250}
+            className="object-contain w-full h-auto"
+          />
+        </div>
+        <div className="w-full lg:w-1/2">
+          <div className="flex justify-center gap-4 mb-6">
+            <button
+              onClick={() => setIsLogin(true)}
+              className={`px-6 py-2  font-semibold rounded-full cursor-pointer transition ${
+                isLogin ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setIsLogin(false)}
+              className={`px-6 py-2  font-semibold rounded-full cursor-pointer transition ${
+                !isLogin ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              Register
+            </button>
+          </div>
+          {isLogin ? <LoginForm cart={cart} /> : <RegisterForm />}
+        </div>
       </div>
     </div>
   );

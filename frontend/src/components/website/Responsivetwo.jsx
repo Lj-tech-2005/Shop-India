@@ -75,7 +75,7 @@ export default function Responsivetwo() {
                                 {/* Image Section */}
                                 <div className="relative w-full h-[220px] rounded-xl overflow-hidden bg-gray-50">
                                     <img
-                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
                                         alt={product.name}
                                         className="w-full h-full object-contain p-2"
                                     />

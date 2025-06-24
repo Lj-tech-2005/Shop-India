@@ -1,12 +1,12 @@
 import { getproduct } from '@/app/library/api-call';
 import ProdBtnGroup from '@/components/admin/ProdBtnGroup';
 import Link from 'next/link';
-
+import Image from 'next/image';
 const ProductTable = async () => {
-  const response = await getproduct(undefined, undefined, undefined, undefined, 0, null, null, 1, true);
+    const response = await getproduct(undefined, undefined, undefined, undefined, 0, null, null, 1, true);
     const products = response?.products;
 
-   
+
     return (
         <div className="mt-20">
             {/* Header */}
@@ -42,10 +42,11 @@ const ProductTable = async () => {
                                     <td className="px-4 py-3 font-semibold">{index + 1}</td>
                                     <td className="px-4 py-3 whitespace-nowrap">
                                         <img
-                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
                                             alt={product.name}
                                             className="w-14 h-14 rounded-lg object-cover"
                                         />
+
                                     </td>
                                     <td className="px-4 py-3 font-medium">{product.name}</td>
                                     <td className="px-4 py-3 text-gray-600">{product.slug}</td>

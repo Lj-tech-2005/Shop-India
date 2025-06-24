@@ -145,7 +145,7 @@ const ProductDetail = ({ product, onClose }) => {
         {product.thumbnail && (
           <div className="flex justify-center">
             <img
-              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
               alt={product.name}
               className="w-full max-w-md object-contain rounded-lg shadow"
             />
@@ -217,7 +217,7 @@ const ProductDetail = ({ product, onClose }) => {
               {product.images.map((img, i) => (
                 <img
                   key={i}
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${img}`}
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${img}`}
                   alt={`img-${i}`}
                   className="h-24 w-24 object-cover rounded-lg border"
                 />

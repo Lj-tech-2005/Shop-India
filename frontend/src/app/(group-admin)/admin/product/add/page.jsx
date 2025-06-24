@@ -66,7 +66,7 @@ export default function AddProductForm() {
     formData.append("colors", JSON.stringify(selColors));
     formData.append("thumbnail", e.target.productImage.files[0]);
 
-    axiosApiInstance.post("product/create", formData)
+    axiosApiInstance.post("/product/create", formData)
       .then((res) => {
         notify(res.data.msg, res.data.flag);
         if (res.data.flag === 1) {
@@ -83,9 +83,9 @@ export default function AddProductForm() {
     <section className="bg-gray-50 min-h-screen py-12">
       <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-lg">
         <div className='flex justify-between'>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-8">Add a New Product</h2>
+          <h2 className="text-2xl cursor-pointer font-semibold text-gray-800 mb-8">Add a New Product</h2>
           <Link href="/admin/product">
-            <button className="flex items-center gap-2 text-sm font-medium text-blue-600 bg-blue-50 px-4 py-2 rounded-full shadow hover:shadow-md transition">
+            <button className="flex items-center gap-2 text-sm cursor-pointer font-medium text-blue-600 bg-blue-50 px-4 py-2 rounded-full shadow hover:shadow-md transition">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
@@ -106,34 +106,56 @@ export default function AddProductForm() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <input type="number" ref={originalPriceRef} onChange={finalPrice} placeholder="Original Price" required className="p-3 rounded-xl border border-gray-300" />
-            <input type="number" ref={discountPriceRef} onChange={finalPrice} placeholder="Discount %" required className="p-3 rounded-xl border border-gray-300" />
-            <input type="number" ref={finalPriceRef} placeholder="Final Price" readOnly required className="p-3 rounded-xl border border-gray-300" />
+          <div>
+            <label className="text-sm font-medium text-gray-700">Pricing</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
+              <input type="number" ref={originalPriceRef} onChange={finalPrice} placeholder="Original Price" required className="p-3 rounded-xl border border-gray-300" />
+              <input type="number" ref={discountPriceRef} onChange={finalPrice} placeholder="Discount %" required className="p-3 rounded-xl border border-gray-300" />
+              <input type="number" ref={finalPriceRef} placeholder="Final Price" readOnly required className="p-3 rounded-xl border border-gray-300" />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Select name="categoryId" options={category?.map(c => ({ value: c._id, label: c.name }))} />
-            <Select name="brandId" options={brand?.map(b => ({ value: b._id, label: b.name }))} />
-            <Select
-              isMulti
-              closeMenuOnSelect={false}
-              onChange={colors => setSelColors(colors.map(c => c.value))}
-              options={color?.map(c => ({ value: c._id, label: c.name }))}
-            />
+            <div>
+              <label className="text-sm font-medium text-gray-700">Category</label>
+              <Select name="categoryId" options={category?.map(c => ({ value: c._id, label: c.name }))} />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Brand</label>
+              <Select name="brandId" options={brand?.map(b => ({ value: b._id, label: b.name }))} />
+            </div>
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium text-gray-700">Available Colors</label>
+              <Select
+                isMulti
+                closeMenuOnSelect={false}
+                onChange={colors => setSelColors(colors.map(c => c.value))}
+                options={color?.map(c => ({ value: c._id, label: c.name }))}
+              />
+            </div>
           </div>
 
-          <textarea name="shortDesc" rows="3" placeholder="Brief description" className="w-full p-3 rounded-xl border border-gray-300"></textarea>
+          <div>
+            <label className="text-sm font-medium text-gray-700">Short Description</label>
+            <textarea name="shortDesc" rows="3" placeholder="Brief description" className="w-full p-3 rounded-xl border border-gray-300"></textarea>
+          </div>
 
-          <RichTextEditor value={description} change={setdiscription} />
+          <div>
+            <label className="text-sm font-medium text-gray-700">Detailed Description</label>
+            <RichTextEditor value={description} change={setdiscription} />
+          </div>
 
-          <input type="file" name="productImage" required className="w-full p-3 border rounded-xl border-gray-300" />
+          <div>
+            <label className="text-sm font-medium text-gray-700">Product Image</label>
+            <input type="file" name="productImage" required className="w-full p-3 border rounded-xl border-gray-300" />
+          </div>
 
-          <button type="submit" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md">
+          <button type="submit" className="inline-flex cursor-pointer items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md">
             <FaPlus /> Add Product
           </button>
         </form>
       </div>
     </section>
+
   );
 }

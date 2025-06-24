@@ -83,7 +83,7 @@ export default function eiditProduct({ params }) {
     formData.append("colors", JSON.stringify(selColors))
     formData.append("thumbnail", e.target.productImage.files[0])
 
-    axiosApiInstance.put(`product/update/${productid}`, formData).then(
+    axiosApiInstance.put(`/product/update/${productid}`, formData).then(
 
       (res) => {
 
@@ -327,7 +327,7 @@ export default function eiditProduct({ params }) {
             />
           </div>
 
-          <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product?.thumbnail}`} height="100px" width="100px" alt="" />
+          <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product?.thumbnail}`} height="100px" width="100px" alt="" />
 
 
           <div className="pt-4">

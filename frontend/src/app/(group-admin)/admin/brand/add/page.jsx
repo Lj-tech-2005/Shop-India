@@ -29,7 +29,7 @@ const AddBrand = () => {
         formdata.append("brandImage", e.target.brandImage.files[0])
 
 
-        axiosApiInstance.post("brand/create", formdata).then(
+        axiosApiInstance.post("/brand/create", formdata).then(
 
 
             (res) => {

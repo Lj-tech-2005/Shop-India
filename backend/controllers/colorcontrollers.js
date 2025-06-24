@@ -35,8 +35,8 @@ const colorcontroller = {
 
             ).catch(
 
-                () => {
-
+                (err) => {
+                    console.log(err)
                     return res.send({ msg: "unable to create color", flag: 0 })
 
                 }
@@ -181,8 +181,8 @@ const colorcontroller = {
                 }
 
             ).catch(
-                () => {
-
+                (err) => {
+                    console.log(err)
                     res.send({ msg: "unable to update color", flag: 0 });
 
 

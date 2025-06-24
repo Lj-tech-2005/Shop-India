@@ -38,7 +38,7 @@ const Productslug = async ({ params, searchParams }) => {
               <Link key={index} href={`/singleproduct/${product?._id}`}>
                 <div className="relative w-full h-[220px] cursor-pointer">
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
                     alt={product.name}
                     className="w-full h-full object-contain rounded-lg bg-gray-50"
                   />

@@ -29,7 +29,7 @@ const AddCategory = () => {
         formdata.append("categoryImage",e.target.categoryImage.files[0])
 
 
-        axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + "category/create", formdata).then(
+        axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + "/category/create", formdata).then(
 
 
             (res) => {

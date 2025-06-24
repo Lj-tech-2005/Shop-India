@@ -150,7 +150,7 @@ export default function CartPage() {
                   {/* Product Image */}
                   <div className="relative w-28 h-28 shrink-0">
                     <img
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
                       alt={product.name}
                       className="w-full h-full object-contain rounded-lg"
                     />

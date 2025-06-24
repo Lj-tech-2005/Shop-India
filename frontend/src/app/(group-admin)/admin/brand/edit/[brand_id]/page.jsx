@@ -39,7 +39,7 @@ const brandedit = ({ params }) => {
 
 
 
-        axiosApiInstance.put(`brand/update/${brandid}`, formdata).then(
+        axiosApiInstance.put(`/brand/update/${brandid}`, formdata).then(
             (res) => {
                 notify(res.data.msg, res.data.flag)
                 if (res.data.flag === 1) {
@@ -147,7 +147,7 @@ const brandedit = ({ params }) => {
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-                    <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/brand/${brand?.brandImage}`} height="100px" width="100px" alt="" />
+                    <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/brand/${brand?.brandImage}`} height="100px" width="100px" alt="" />
 
                     <div className="flex justify-end space-x-4 pt-4">
                         <Link href={"/admin/brand"}>
