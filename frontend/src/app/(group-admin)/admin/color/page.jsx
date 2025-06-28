@@ -1,22 +1,13 @@
-'use client';
 
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { getColor } from "@/app/library/api-call";
 import Status from "@/components/admin/Status";
 import Delete from "@/components/admin/Delete";
 
-const ColorList = () => {
-    const [colordata, setColordata] = useState([]);
+const ColorList = async () => {
 
-    useEffect(() => {
-        const fetchColors = async () => {
-            const colorJSON = await getColor();
-            setColordata(colorJSON?.colors || []);
-        };
-        fetchColors();
-    }, []);
-
+    const colorJSON = await getColor();
+    const colordata = colorJSON?.colors;
     return (
         <div className="min-h-screen p-6 pt-20 dark:bg-gray-900">
             <div className="flex justify-between items-center max-w-6xl mx-auto mb-6">

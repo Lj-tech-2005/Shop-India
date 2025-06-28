@@ -1,25 +1,12 @@
-"use client"; // इसे client component बना दिया
 
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { axiosApiInstance } from "@/app/library/helper";
 import Status from "@/components/admin/Status";
 import Delete from "@/components/admin/Delete";
+import { getCategory } from "@/app/library/api-call";
 
-export default function CategoryList() {
-  const [catData, setCatData] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axiosApiInstance.get("category");
-        setCatData(res.data?.categorys || []);
-      } catch (error) {
-        console.error("Category fetch error:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+export default async function CategoryList() {
+  const categoryJSON = await getCategory();
+  const catData = categoryJSON?.categorys;
 
   return (
     <div className="min-h-screen p-6 pt-20 dark:bg-gray-900">

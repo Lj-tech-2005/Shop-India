@@ -1,7 +1,6 @@
 import { getproduct } from '@/app/library/api-call';
 import ProdBtnGroup from '@/components/admin/ProdBtnGroup';
 import Link from 'next/link';
-import Image from 'next/image';
 const ProductTable = async () => {
     const response = await getproduct(undefined, undefined, undefined, undefined, 0, null, null, 1, true);
     const products = response?.products;

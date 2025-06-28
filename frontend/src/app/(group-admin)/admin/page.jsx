@@ -1,28 +1,11 @@
-'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import AdminProductRevenueChart from '@/components/admin/AdminProductRevenueChart';
 import AdminProductSalesChart from '@/components/admin/AdminProductSalesChart';
 import AdminSalesOverTimeChart from '@/components/admin/AdminSalesOverTimeChart';
 import AdminTopProducts from '@/components/admin/AdminTopProducts';
 
 export default function AdminDashboard() {
-  const router = useRouter();
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    // ✅ Delay rendering until this check completes
-    const isAdmin = localStorage.getItem('admin');
-    if (!isAdmin) {
-      router.replace('/admin-login'); // ⛔️ Immediately redirect
-    } else {
-      setIsReady(true); // ✅ Only now allow rendering
-    }
-  }, []);
-
-  // ⛔️ Block rendering completely until ready
-  if (!isReady) return null;
+ 
 
   return (
     <div className="max-w-[1400px] mt-17 mx-auto p-4 space-y-10">

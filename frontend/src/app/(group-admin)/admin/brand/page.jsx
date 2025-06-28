@@ -1,25 +1,14 @@
-"use client";
 
-import React, { useEffect, useState } from "react";
+
+import React from "react";
 import Link from "next/link";
 import Status from "@/components/admin/Status";
 import Delete from "@/components/admin/Delete";
-import { axiosApiInstance } from "@/app/library/helper";
+import { getBrand } from "@/app/library/api-call";
 
-export default function BrandList() {
-  const [brandata, setBrandata] = useState([]);
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const res = await axiosApiInstance.get("brand");
-        setBrandata(res.data?.brands || []);
-      } catch (err) {
-        console.error("Failed to fetch brands:", err);
-      }
-    };
-    fetchBrands();
-  }, []);
+export default async function BrandList() {
+  const brandJSON = await getBrand();
+  const brandata = brandJSON?.brands;
 
   return (
     <div className="min-h-screen p-6 pt-20 dark:bg-gray-900">
