@@ -20,8 +20,10 @@ server.use(express.json());
 server.use(cookieParser());
 
 const allowedOrigins = [
-    "https://shop-india-frontend.onrender.com/" // Deployed frontend
+    "https://shop-india-frontend.onrender.com",
+    "http://localhost:3000"
 ];
+
 
 server.use(
     cors({
