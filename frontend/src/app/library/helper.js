@@ -21,15 +21,15 @@ function createSlug(text) {
 
 const notify = (msg, flag) => toast(msg, { type: flag ? "success" : "error" });
 
-function getCookies(name) {
-  if (typeof document === 'undefined') return null; // ✅ Safe for SSR
+// function getCookies(name) {
+//   if (typeof document === 'undefined') return null; // ✅ Safe for SSR
 
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-}
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
+//   if (parts.length === 2) return parts.pop().split(';').shift();
+//   return null;
+// }
 
 
 
-export { createSlug, notify, axiosApiInstance, getCookies }
+export { createSlug, notify, axiosApiInstance, }

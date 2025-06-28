@@ -1,4 +1,5 @@
 'use client';
+
 import { axiosApiInstance } from '@/app/library/helper';
 import { removeAdmin, setAdmin } from '@/redux/features/adminSlice';
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,7 @@ export default function Header() {
   const admin = useSelector((state) => state.admin);
   const [formattedTime, setFormattedTime] = useState('');
 
+  // Load admin data from localStorage on first render
   useEffect(() => {
     const lsadmin = localStorage.getItem('admin');
     const loginAt = localStorage.getItem('loginAt');
@@ -35,33 +37,34 @@ export default function Header() {
       const date = new Date(loginAt);
       setFormattedTime(date.toLocaleString());
     }
-  }, []);
+  }, [dispatch]);
 
+  // Handle logout
   const logouthandler = (e) => {
     e.preventDefault();
-    axiosApiInstance
-      .get('admin/logout', { withCredentials: true })
-      .then(() => {
-        
-        dispatch(removeAdmin());
-        router.push('/admin-login');
-      })
-      .catch(() => {});
+
+    // Clear localStorage tokens and data
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('loginAt');
+
+    // Clear Redux state
+    dispatch(removeAdmin());
+
+    // Redirect to login
+    router.push('/admin-login');
   };
 
   return (
-    <header className="bg-[#2e3f5a] fixed top-0  z-10 w-[85vw] px-12 py-4 flex justify-between items-center shadow-lg text-white">
-      {/* Left section (optional search or title) */}
+    <header className="bg-[#2e3f5a] fixed top-0 z-10 w-[85vw] px-12 py-4 flex justify-between items-center shadow-lg text-white">
+      {/* Left: Logo or Title */}
       <div className="flex items-center gap-4 flex-1">
-        {/* Optional: Page title or logo */}
         <h1 className="text-xl font-semibold">Admin Dashboard</h1>
       </div>
 
-      {/* Right section */}
+      {/* Right: Actions */}
       <div className="flex items-center gap-6 text-base">
-        {/* Icons */}
-
-        {/* Logout */}
+        {/* Logout Button */}
         <div
           onClick={logouthandler}
           className="flex items-center gap-2 cursor-pointer text-sm hover:text-red-400 transition duration-300"
@@ -70,7 +73,7 @@ export default function Header() {
           <span>Log out</span>
         </div>
 
-        {/* Admin info */}
+        {/* Admin Info */}
         <div className="flex items-center gap-2">
           <FaUserCircle className="text-2xl text-gray-300" />
           <div className="flex flex-col text-right">

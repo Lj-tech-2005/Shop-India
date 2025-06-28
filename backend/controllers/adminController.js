@@ -3,41 +3,40 @@ var jwt = require('jsonwebtoken');
 const orderModel = require("../models/orderModels");
 const adminController = {
 
-  async login(req, res) {
+async login(req, res) {
+  const { email, password } = req.body;
 
-    const { email, password } = req.body
-
-    try {
-      const admin = await adminmodel.findOne({ email: email });
-      if (!admin) {
-        res.send({ msg: "admin is not exist", flag: 1 });
-
-      }
-
-      if (password === admin.password) {
-        var token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
-        res.cookie("admin_token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // ✅ true in production
-          sameSite: "none",
-          path: "/", // ✅ IMPORTANT so it's visible on /admin
-          maxAge: 24 * 60 * 60 * 1000
-        });
-        res.send({ msg: "login successfully", flag: 1, admin: { ...admin.toJSON(), password: "", token } });
-
-      } else {
-
-        res.send({ msg: "incorrect password", flag: 0 });
-
-      }
-
-    } catch (error) {
-
-      res.status(500).send({ msg: 'Internal Server Error', flag: 0 });
-
+  try {
+    const admin = await adminmodel.findOne({ email: email });
+    if (!admin) {
+      return res.send({ msg: "admin does not exist", flag: 0 }); // flag 0 = error
     }
 
-  },
+    if (password === admin.password) {
+      // Generate JWT token
+      const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+
+      // ✅ DO NOT SET COOKIE — client will store in localStorage
+      return res.send({
+        msg: "Login successful",
+        flag: 1,
+        admin: {
+          _id: admin._id,
+          email: admin.email,
+          name: admin.name,
+          // include only what’s needed
+        },
+        token, // 🟢 frontend will store this in localStorage
+      });
+    } else {
+      return res.send({ msg: "Incorrect password", flag: 0 });
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).send({ msg: "Internal Server Error", flag: 0 });
+  }
+},
+
   async getProductSalesStats(req, res) {
     try {
       const orders = await orderModel.find({ order_status: { $in: [1, 2, 3, 4, 5] } }).populate("product_details.product_id", "name");
