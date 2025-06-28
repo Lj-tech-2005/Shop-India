@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { getColor } from "@/app/library/api-call";
 import Status from "@/components/admin/Status";

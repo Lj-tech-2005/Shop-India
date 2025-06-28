@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import Status from "@/components/admin/Status";
 import Delete from "@/components/admin/Delete";

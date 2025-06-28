@@ -1,4 +1,6 @@
+export const dynamic = "force-dynamic";
 import { getproduct } from '@/app/library/api-call';
+
 import ProdBtnGroup from '@/components/admin/ProdBtnGroup';
 import Link from 'next/link';
 const ProductTable = async () => {
