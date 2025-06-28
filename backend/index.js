@@ -20,7 +20,7 @@ server.use(express.json());
 server.use(cookieParser());
 
 const allowedOrigins = [
-    "https://shop-india-frontend.onrender.com",
+    "https://shop-india-nine.vercel.app",
     "http://localhost:3000"
 ];
 
