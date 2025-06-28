@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['shop-india.onrender.com'],
+    domains: ['shop-india-backend.onrender.com'],
   },
   output: 'standalone', // safe for Render deployment
 };
