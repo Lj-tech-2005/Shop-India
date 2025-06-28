@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     domains: ['shop-india.onrender.com'],
   },
-  output: 'standalone', // ✅ correct for server app (optional but safe)
+  output: 'standalone', // safe for Render deployment
 };
 
-export default nextConfig;
+module.exports = nextConfig;

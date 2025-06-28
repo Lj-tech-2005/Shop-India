@@ -20,8 +20,7 @@ server.use(express.json());
 server.use(cookieParser());
 
 const allowedOrigins = [
-    "http://localhost:3000", // Local dev
-    "https://shop-india-one.vercel.app" // Deployed frontend
+    "https://shop-india-frontend.onrender.com/" // Deployed frontend
 ];
 
 server.use(
