@@ -1,11 +1,13 @@
 import React from 'react'
-import { getBrand, getCategory } from '../library/api-call';
+import { getBrand, getCategory, getproduct } from '../library/api-call';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProductDetails from '@/components/website/ProductDetails';
 import Responsive from '@/components/website/Responsive';
 import Responsivetwo from '@/components/website/Responsivetwo';
 import Responsivethree from '@/components/website/Responsivethree';
+import AddToCart from '@/components/website/AddToCart';
+import RecentlyViewedSection from '@/components/website/RecentlyViewedSection';
 
 
 export default async function page() {
@@ -27,6 +29,10 @@ export default async function page() {
   const officecat = Array.isArray(catdata) ? catdata.slice(33, 37) : [];
 
 
+
+  const response = await getproduct(undefined, undefined, undefined, undefined, 0, null, null, 1, true);
+
+  const products = response?.products?.slice(0, 8) || [];
 
 
   return (
@@ -402,6 +408,65 @@ export default async function page() {
 
 
 
+
+      <section className="max-w-[1360px] mx-auto px-4 py-10">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Top Deals for You</h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {products.map((product) => (
+            
+            <div
+              key={product._id}
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-3 flex flex-col"
+            >
+              {/* Image with badges */}
+              <div className="relative w-full h-[180px] sm:h-[200px] overflow-hidden bg-gray-100 rounded-lg flex items-center justify-center">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${product.thumbnail}`}
+                  alt={product.name}
+                  className="max-h-full max-w-full object-contain"
+                />
+                {product.discountPercentage > 0 && (
+                  <span className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                    -{product.discountPercentage}%
+                  </span>
+                )}
+                <span className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                  New Arrival
+                </span>
+              </div>
+
+              {/* Product Name */}
+              <Link href={`/singleproduct/${product._id}`}>
+                <h3 className="mt-3 text-sm font-medium text-gray-800 line-clamp-2 hover:text-blue-600 cursor-pointer">
+                  {product.name}
+                </h3>
+              </Link>
+
+              {/* Prices */}
+              <div className="mt-2 flex items-center gap-2">
+                <span className="text-blue-700 font-semibold text-lg">
+                  ₹{product.finalPrice}
+                </span>
+                {product.originalPrice > product.finalPrice && (
+                  <span className="text-sm text-gray-400 line-through">
+                    ₹{product.originalPrice}
+                  </span>
+                )}
+              </div>
+
+              {/* Add to Cart Button */}
+              <div className="mt-3">
+                <AddToCart product={product} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
+
       {/*   last section  */}
 
       <section className="mt-10 py-6 px-4">
@@ -441,6 +506,13 @@ export default async function page() {
 
         </div>
       </section>
+
+
+
+      <RecentlyViewedSection />
+
+
+
       <section className="my-17 py-8 px-4 md:px-10">
         <div className="max-w-7xl mx-auto space-y-6 text-gray-700">
 

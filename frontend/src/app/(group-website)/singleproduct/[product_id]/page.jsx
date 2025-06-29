@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getproduct } from '@/app/library/api-call';
-import {  FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
+import { FaBalanceScale, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPinterestP } from 'react-icons/fa';
 import AddToCart from '@/components/website/AddToCart';
 import Buynow from '@/components/website/Buynow';
 import WishlistButton from '@/components/website/WishlistButton';
+import { addToRecentlyViewed } from '@/app/library/helper';
 
 export default function SingalProduct({ params }) {
   const productId = params?.product_id;
@@ -28,6 +29,11 @@ export default function SingalProduct({ params }) {
       if (response?.products) {
         setProduct(response.products);
         setMainImage(`${process.env.NEXT_PUBLIC_API_BASE_URL}/images/product/${response.products.thumbnail}`);
+
+        if (typeof window !== 'undefined') {
+          addToRecentlyViewed(response.products);
+        }
+
       }
     }
     fetchProduct();
@@ -140,10 +146,10 @@ export default function SingalProduct({ params }) {
 
               <AddToCart product={product} />
               {/* <button className="w-full bg-yellow-400 text-black py-2 rounded hover:bg-yellow-500">BUY WITH PayPal</button> */}
-              <Buynow product={product}/>
+              <Buynow product={product} />
               <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                 {/* <p><FaHeart className="inline mr-1" /> Wishlist</p> */}
-                <WishlistButton productId={product._id}/>
+                <WishlistButton productId={product._id} />
                 <p><FaBalanceScale className="inline mr-1" /> Compare</p>
               </div>
 

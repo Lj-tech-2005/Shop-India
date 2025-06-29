@@ -31,5 +31,16 @@ const notify = (msg, flag) => toast(msg, { type: flag ? "success" : "error" });
 // }
 
 
+export const addToRecentlyViewed = (product) => {
+  if (!product?._id) return;
 
-export { createSlug, notify, axiosApiInstance, }
+  const existing = JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+
+  const updated = existing.filter(p => p._id !== product._id);
+  updated.unshift(product);
+
+  const limited = updated.slice(0, 10); // Only latest 10
+  localStorage.setItem("recentlyViewed", JSON.stringify(limited));
+};
+
+export { createSlug, notify, axiosApiInstance}

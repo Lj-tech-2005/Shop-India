@@ -21,6 +21,9 @@ export default function Header() {
     const dispatch = useDispatch();
 
     const [toggle, settoggle] = useState(false);
+    const handleMobileLinkClick = () => {
+        settoggle(false);
+    };
     const [showPagesDropdown, setShowPagesDropdown] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
@@ -116,14 +119,17 @@ export default function Header() {
                     {/* Mobile Menu */}
                     <div className={`md:hidden fixed top-0 z-20 bg-black text-white h-screen w-[50vw] duration-500 p-5 ${toggle ? "left-0" : "left-[-100%]"}`}>
                         <ul className="flex flex-col gap-4 text-sm font-bold">
-                            <Link href="/"><li className="cursor-pointer">Home</li></Link>
-                            {user.data && <Link href="/profile"><li className="cursor-pointer">👤 Profile</li></Link>}
-                            <Link href="/about"><li className="cursor-pointer">📘 About</li></Link>
-                            <Link href="/contact"><li className="cursor-pointer">📞 Contact</li></Link>
-                            <Link href="/login"><li className="cursor-pointer">🔐 Login</li></Link>
-                            <Link href="/store"><li className="cursor-pointer">🛍️ Store</li></Link>
+                            <Link href="/" onClick={handleMobileLinkClick}><li className="cursor-pointer">Home</li></Link>
+                            {user.data && (
+                                <Link href="/profile" onClick={handleMobileLinkClick}><li className="cursor-pointer">👤 Profile</li></Link>
+                            )}
+                            <Link href="/about" onClick={handleMobileLinkClick}><li className="cursor-pointer">📘 About</li></Link>
+                            <Link href="/contact" onClick={handleMobileLinkClick}><li className="cursor-pointer">📞 Contact</li></Link>
+                            <Link href="/login" onClick={handleMobileLinkClick}><li className="cursor-pointer">🔐 Login</li></Link>
+                            <Link href="/store" onClick={handleMobileLinkClick}><li className="cursor-pointer">🛍️ Store</li></Link>
                         </ul>
                     </div>
+
 
                     {/* Profile + Cart */}
                     {/* Profile + Cart */}
