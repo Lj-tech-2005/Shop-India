@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Admin Panel - Shop India",
+  icons: {
+    icon: "/2.png", // ✅ this sets your favicon
+  },
   description: "Admin dashboard for Shop India",
 };
 
