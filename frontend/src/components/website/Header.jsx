@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoMdSearch } from 'react-icons/io';
 import { FaBars } from 'react-icons/fa6';
@@ -27,9 +27,24 @@ export default function Header() {
     const [showPagesDropdown, setShowPagesDropdown] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
+    const profileRef = useRef();
+
     useEffect(() => {
         dispatch(lstocart());
         dispatch(lstoUser());
+    }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setShowProfileDropdown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, []);
 
     const logoutHandler = () => {
@@ -64,9 +79,6 @@ export default function Header() {
                     <div className="flex justify-between w-full md:w-auto items-center gap-4">
                         <Link href={"/"}>
                             <div className="flex items-center gap-2 cursor-pointer">
-                                {/* <div className="bg-[#01A49E] rounded-full w-[55px] h-[49px] flex justify-center items-center">
-                                <img src="/vector1.png" className="mt-2" />
-                            </div> */}
                                 <img src="/2.png" alt="logo" width={65} />
                                 <div className="text-[18px] font-bold leading-5 font-mono">
                                     <p>Shop</p>
@@ -130,17 +142,14 @@ export default function Header() {
                         </ul>
                     </div>
 
-
-                    {/* Profile + Cart */}
                     {/* Profile + Cart */}
                     <div className="w-full md:w-auto flex justify-between md:justify-start gap-5 items-center relative">
-
-                        {/* Cart Icon (left on mobile) */}
+                        {/* Cart Icon */}
                         <Link href="/cart">
                             <div className="relative flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl">
                                 <div className="bg-[#EBEEF6] text-2xl w-[40px] ms-3 h-[40px] rounded-full flex justify-center items-center relative">
                                     <MdShoppingCart />
-                                    <span className="absolute bottom-[-6px]  right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
+                                    <span className="absolute bottom-[-6px] right-[-6px] bg-[#01A49E] text-white text-xs w-[18px] h-[18px] rounded-full flex justify-center items-center">
                                         {cart?.items?.length ?? 0}
                                     </span>
                                 </div>
@@ -148,8 +157,8 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        {/* Profile Icon (right on mobile) */}
-                        <div className="relative">
+                        {/* Profile Icon & Dropdown */}
+                        <div className="relative" ref={profileRef}>
                             <div
                                 className="flex flex-col items-center cursor-pointer text-[#01A49E] text-2xl"
                                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
@@ -196,8 +205,6 @@ export default function Header() {
                             )}
                         </div>
                     </div>
-
-
                 </nav>
             </div>
 
