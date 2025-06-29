@@ -25,8 +25,6 @@ const Checkout = () => {
   if (
     !isClient ||
     !user ||
-    !user.shipping_address ||
-    user.shipping_address.length === 0 ||
     !cart
   ) {
     return <div className="p-6 text-center">Loading...</div>;

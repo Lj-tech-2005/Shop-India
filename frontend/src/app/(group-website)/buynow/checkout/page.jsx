@@ -112,9 +112,10 @@ const BuyNowCheckout = () => {
       .catch(() => notify("Order failed", 0));
   };
 
-  if (!isClient || loading || !user || !user.shipping_address?.length) {
+  if (!isClient || loading || !user) {
     return <div className="p-6 text-center">Loading...</div>;
   }
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -137,7 +138,7 @@ const BuyNowCheckout = () => {
                 <p>{address.city}, {address.state} - {address.postalCode}</p>
               </div>
             ))}
-             <Link href={"/profile"}>
+            <Link href={"/profile"}>
               <div className="inline-block px-4 py-2 bg-teal-500 text-white rounded cursor-pointer">
                 + Add New
               </div>
