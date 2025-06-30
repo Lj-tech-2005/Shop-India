@@ -13,7 +13,7 @@ export default function TopProductSection() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await getproduct();
-            const prod = response?.products?.[4];
+            const prod = response?.products?.[0];
             if (prod) {
                 setProduct(prod);
                 const defaultImg = prod?.thumbnail || prod?.images?.[0];
