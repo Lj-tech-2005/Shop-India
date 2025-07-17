@@ -164,10 +164,10 @@ export default function CartPage() {
                       </h3>
                       <div className="flex items-center gap-2 mb-2">
                         <p className="text-gray-400 line-through text-sm">
-                          ${product.originalPrice}
+                         ₹{product.originalPrice}
                         </p>
                         <p className="text-red-500 font-bold text-lg">
-                          ${(product.finalPrice) * (item.qty)}
+                         ₹{(product.finalPrice) * (item.qty)}
                         </p>
                         <p className="text-green-600 font-semibold text-sm">
                           ({product.discountPercentage}% OFF)
