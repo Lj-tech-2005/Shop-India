@@ -18,6 +18,7 @@ const usercontactrouters = require('./routers/usercontactrouters')
 
 server.use(express.json());
 server.use(cookieParser());
+server.use("/images", express.static("public/images"));
 
 const allowedOrigins = [
     "https://shop-india-nine.vercel.app",
