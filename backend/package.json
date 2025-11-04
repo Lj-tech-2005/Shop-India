@@ -1,25 +1,22 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "api/index.js",
-  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
-    "dev": "node app.js",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Lj tech (lokesh jangir)",
   "license": "ISC",
-  "description": "Shop India backend deployed on Vercel (serverless)",
+  "description": "",
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "cryptr": "^6.3.0",
     "dotenv": "^16.5.0",
-    "express": "^4.21.1",
     "express-fileupload": "^1.5.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
-    "razorpay": "^2.9.6",
-    "serverless-http": "^4.0.0"
+    "razorpay": "^2.9.6"
   }
 }

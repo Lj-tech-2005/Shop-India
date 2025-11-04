@@ -4,6 +4,6 @@
     "express": "^4.21.2"
   },
   "scripts": {
-    "start": "concurrently \"cd frontend && npm run dev\" \"cd backend && node --watch app\""
+    "start": "concurrently \"cd frontend && npm run dev\" \"cd backend && node --watch index\""
   }
 }
