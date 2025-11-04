@@ -54,7 +54,7 @@ server.get("/api/test", (req, res) => {
   res.json({ message: "API is working!" });
 });
 
-let isConnected = false; // <--- add this flag
+let isConnected = false; 
 
 async function connectDB() {
   if (isConnected) return;
