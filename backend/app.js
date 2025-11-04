@@ -70,3 +70,4 @@ async function connectDB() {
 }
 
 connectDB(); // call it once, not per request
+module.exports =server;
