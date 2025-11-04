@@ -54,8 +54,19 @@ server.get("/api/test", (req, res) => {
   res.json({ message: "API is working!" });
 });
 
-mongoose.connect(process.env.MONGODB_URL, { dbName: "Shop-india" })
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch(err => console.log("MongoDB connection error:", err));
+let isConnected = false; // <--- add this flag
 
-module.exports = server;
+async function connectDB() {
+  if (isConnected) return;
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URL, {
+      dbName: "Shop-india",
+    });
+    isConnected = db.connections[0].readyState === 1;
+    console.log("✅ MongoDB connected");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+  }
+}
+
+connectDB(); // call it once, not per request
